@@ -1,6 +1,6 @@
 // Retrieve and return an array containing the current generation of cells
 const getCurrentGeneration = () => {
-  
+  return currentGeneration;
 };
 
 // Takes an array containing the current generation of cells as an argument
