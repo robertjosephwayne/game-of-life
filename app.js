@@ -157,6 +157,23 @@ const getSmallExploderPattern = () => {
   return smallExploderPattern;
 }
 
+const getExploderPattern = () => {
+  const exploderPattern = getEmptyGeneration();
+  exploderPattern[7][7] = 1;
+  exploderPattern[7][9] = 1;
+  exploderPattern[7][11] = 1;
+  exploderPattern[8][7] = 1;
+  exploderPattern[8][11] = 1;
+  exploderPattern[9][7] = 1;
+  exploderPattern[9][11] = 1;
+  exploderPattern[10][7] = 1;
+  exploderPattern[10][11] = 1;
+  exploderPattern[11][7] = 1;
+  exploderPattern[11][9] = 1;
+  exploderPattern[11][11] = 1;
+  return exploderPattern;
+}
+
 const getBlockPattern = () => {
   const blockPattern = getEmptyGeneration();
   blockPattern[4][4] = 1;
@@ -186,7 +203,7 @@ const getBoatPattern = () => {
 }
 
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getSmallExploderPattern();
+const startingGeneration = getExploderPattern();
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
