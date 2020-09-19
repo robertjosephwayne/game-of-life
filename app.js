@@ -174,6 +174,18 @@ const getExploderPattern = () => {
   return exploderPattern;
 }
 
+const getTenCellRowPattern = () => {
+  const tenCellRowPattern = getEmptyGeneration();
+  const startingRow = 9;
+  const startingColumn = 5;
+  const endingColumn = startingColumn + 10;
+  for (let i = startingColumn; i < endingColumn; i++) {
+    tenCellRowPattern[startingRow][i] = 1;
+  }
+
+  return tenCellRowPattern;
+}
+
 const getBlockPattern = () => {
   const blockPattern = getEmptyGeneration();
   blockPattern[4][4] = 1;
@@ -203,7 +215,7 @@ const getBoatPattern = () => {
 }
 
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getExploderPattern();
+const startingGeneration = getTenCellRowPattern();
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
