@@ -83,16 +83,20 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
 
 // Takes an array containing the next generation as an argument
 // Updates the page to display the next generation
-function render(nextGeneration) {
-  const rows = nextGeneration.length;
-  const columns = nextGeneration[0].length;
+function render() {
+  const currentGeneration = getCurrentGeneration();
+  const rows = currentGeneration.length;
+  const columns = currentGeneration[0].length;
   const gameCells = document.createElement('table');
+  gameCells.addEventListener('click', handleCellClick);
 
   for (let i = 0; i < rows; i++) {
     const currentRow = document.createElement('tr');
     for (let j = 0; j < columns; j++) {
       const cell = document.createElement('td')
-      if (nextGeneration[i][j]) {
+      cell.setAttribute("data-row", i);
+      cell.setAttribute("data-column", j);
+      if (currentGeneration[i][j]) {
         cell.className = 'alive';
       } else {
         cell.className = 'dead';
@@ -115,12 +119,48 @@ function tick() {
   const currentGeneration = getCurrentGeneration();
   const nextGeneration = getNextGeneration(currentGeneration);
   setCurrentGeneration(nextGeneration);
-  render(nextGeneration);
+  render();
 }
 
-function initializeGame(initialGeneration) {
-  currentGeneration = initialGeneration;
-  render(currentGeneration);
+function initializeGame(rows = 20, columns = 20) {
+  const initialGeneration = getEmptyGeneration(rows, columns);
+  setCurrentGeneration(initialGeneration);
+  render();
+}
+
+function getPattern(patternName) {
+  let pattern = getEmptyGeneration();
+  
+  switch (patternName) {
+    case "glider":
+      pattern = getGliderPattern();
+      break;
+    case "small-exploder":
+      pattern = getSmallExploderPattern();
+      break;
+    case "exploder":
+      pattern = getExploderPattern();
+      break;
+    case "ten-cell-row":
+      pattern = getTenCellRowPattern();
+      break;
+    case "lightweight-spaceship":
+      pattern = getLightweightSpaceshipPattern();
+      break;
+    case "block":
+      pattern = getBlockPattern();
+      break;
+    case "tub":
+      pattern = getTubPattern();
+      break;
+    case "boat":
+      pattern = getBoatPattern();
+      break;
+    default:
+      break;
+  }
+
+  return pattern;
 }
 
 function getEmptyGeneration(rows = 20, columns = 20) {
@@ -227,19 +267,43 @@ function getBoatPattern(startingRow = 0, startingColumn = 0) {
 }
 
 function handleStart(event) {
-  const ticker = setInterval(tick, 1000);
+  const ticker = setInterval(tick, 700);
   const startButton = document.querySelector('#start');
   const stopButton = document.querySelector('#stop');
   startButton.addEventListener('click', () => clearInterval(ticker));
   stopButton.addEventListener('click', () => clearInterval(ticker));
 }
 
-let currentGeneration = getEmptyGeneration();
-const startingGeneration = getTenCellRowPattern();
-initializeGame(startingGeneration);
+function handleCellClick(event) {
+  const cellRow = event.target.dataset.row;
+  const cellColumn = event.target.dataset.column;
+  const currentGeneration = getCurrentGeneration();
+  let currentValue = currentGeneration[cellRow][cellColumn];
+  
+  if (currentValue === 1) {
+    currentGeneration[cellRow][cellColumn] = 0;
+  } else {
+    currentGeneration[cellRow][cellColumn] = 1;
+  }
+
+  setCurrentGeneration(currentGeneration);
+  render();
+}
+
+function handlePatternSelection(event) {
+  const patternName = event.target.value;
+  const pattern = getPattern(patternName);
+  setCurrentGeneration(pattern);
+  render();
+}
+
+initializeGame();
 
 const tickButton = document.querySelector('#tick');
 tickButton.addEventListener('click', tick);
 
 const startButton = document.querySelector('#start');
-startButton.addEventListener('click', handleStart)
+startButton.addEventListener('click', handleStart);
+
+const patterns = document.querySelector('#patterns');
+patterns.addEventListener('change', handlePatternSelection);
