@@ -53,7 +53,32 @@ const isAliveNextGeneration = (currentGeneration, cellRow, cellColumn) => {
 // If there is overflow, the pattern is assumed to continue on the other side of the grid
 // Returns the number of neighbors that are alive in the current generation
 const countLiveNeighbors = (currentGeneration, cellRow, cellColumn) => {
-  
+  const lastRow = currentGeneration.length - 1;
+  const lastColumn = currentGeneration[0].length - 1;
+  let liveNeighbors = 0;
+
+  for (let i = cellRow - 1; i <= cellRow + 1; i++) {
+    let neighborRow = i;
+    if (i === -1) {
+      neighborRow = lastRow;
+    } else if (i === lastRow + 1) {
+      neighborRow = 0;
+    }
+
+    for (let j = cellColumn - 1; j <= cellColumn + 1; j++) {
+      let neighborColumn = j;
+      if (j === -1) {
+        neighborColumn = lastColumn;
+      } else if (j === lastColumn + 1) {
+        neighborColumn = 0;
+      }
+
+      if (i === cellRow && j === cellColumn) continue;
+      liveNeighbors += currentGeneration[neighborRow][neighborColumn];
+    }
+  }
+
+  return liveNeighbors;
 };
 
 // Takes an array containing the next generation as an argument
