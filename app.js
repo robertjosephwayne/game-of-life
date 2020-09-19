@@ -138,3 +138,5 @@ currentGeneration[2][1] = 1;
 currentGeneration[2][2] = 1;
 
 render(currentGeneration);
+const tickButton = document.querySelector('#tick');
+tickButton.addEventListener('click', tick);
