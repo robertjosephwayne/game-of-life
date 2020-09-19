@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+h1 {
+  text-align: center;
+}
+
 table {
   width: 500px;
   height: 500px;
