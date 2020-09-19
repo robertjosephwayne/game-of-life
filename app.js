@@ -186,6 +186,20 @@ const getTenCellRowPattern = () => {
   return tenCellRowPattern;
 };
 
+const getLightweightSpaceshipPattern = (startingRow = 0, startingColumn = 0) => {
+  const lightweightSpaceshipPattern = getEmptyGeneration();
+  lightweightSpaceshipPattern[startingRow][startingColumn + 1] = 1
+  lightweightSpaceshipPattern[startingRow][startingColumn + 2] = 1
+  lightweightSpaceshipPattern[startingRow][startingColumn + 3] = 1
+  lightweightSpaceshipPattern[startingRow][startingColumn + 4] = 1
+  lightweightSpaceshipPattern[startingRow + 1][startingColumn] = 1
+  lightweightSpaceshipPattern[startingRow + 1][startingColumn + 4] = 1
+  lightweightSpaceshipPattern[startingRow + 2][startingColumn + 4] = 1
+  lightweightSpaceshipPattern[startingRow + 3][startingColumn] = 1
+  lightweightSpaceshipPattern[startingRow + 3][startingColumn + 3] = 1
+  return lightweightSpaceshipPattern;
+}
+
 const getBlockPattern = () => {
   const blockPattern = getEmptyGeneration();
   blockPattern[4][4] = 1;
@@ -215,7 +229,7 @@ const getBoatPattern = () => {
 };
 
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getTenCellRowPattern();
+const startingGeneration = getLightweightSpaceshipPattern(8, 8);
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
