@@ -23,7 +23,7 @@ const getNextGeneration = currentGeneration => {
 
 // Updates the variable containing the current generation of cells to the next generation
 const setCurrentGeneration = nextGeneration => {
-  
+  currentGeneration = nextGeneration;
 };
 
 // Takes an array containing the current generation as an argument
