@@ -143,7 +143,7 @@ const getGliderPattern = () => {
   gliderPattern[5][4] = 1;
   gliderPattern[5][5] = 1;
   return gliderPattern;
-}
+};
 
 const getSmallExploderPattern = () => {
   const smallExploderPattern = getEmptyGeneration();
@@ -155,7 +155,7 @@ const getSmallExploderPattern = () => {
   smallExploderPattern[10][10] = 1;
   smallExploderPattern[11][9] = 1;
   return smallExploderPattern;
-}
+};
 
 const getExploderPattern = () => {
   const exploderPattern = getEmptyGeneration();
@@ -172,7 +172,7 @@ const getExploderPattern = () => {
   exploderPattern[11][9] = 1;
   exploderPattern[11][11] = 1;
   return exploderPattern;
-}
+};
 
 const getTenCellRowPattern = () => {
   const tenCellRowPattern = getEmptyGeneration();
@@ -184,7 +184,7 @@ const getTenCellRowPattern = () => {
   }
 
   return tenCellRowPattern;
-}
+};
 
 const getBlockPattern = () => {
   const blockPattern = getEmptyGeneration();
@@ -202,7 +202,7 @@ const getTubPattern = () => {
   tubPattern[4][5] = 1;
   tubPattern[5][4] = 1;
   return tubPattern;
-}
+};
 
 const getBoatPattern = () => {
   const boatPattern = getEmptyGeneration();
@@ -212,7 +212,7 @@ const getBoatPattern = () => {
   boatPattern[6][5] = 1;
   boatPattern[6][6] = 1;
   return boatPattern;
-}
+};
 
 let currentGeneration = getEmptyGeneration();
 const startingGeneration = getTenCellRowPattern();
