@@ -6,7 +6,19 @@ const getCurrentGeneration = () => {
 // Takes an array containing the current generation of cells as an argument
 // Returns an array containing the next generation of cells
 const getNextGeneration = currentGeneration => {
-  
+  const rows = currentGeneration.length;
+  const columns = currentGeneration[0].length;
+  const nextGeneration = [];
+
+  for (let i = 0; i < rows; i++) {
+    nextGeneration[i] = []; 
+    for (let j = 0; j < columns; j++) {
+      const isAlive = isAliveNextGeneration(currentGeneration, i, j);
+      nextGeneration[i][j] = isAlive;
+    }
+  }
+
+  return nextGeneration;
 };
 
 // Updates the variable containing the current generation of cells to the next generation
