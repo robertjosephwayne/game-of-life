@@ -31,7 +31,20 @@ const setCurrentGeneration = nextGeneration => {
 // Returns a boolean value indicating whether the cell will be alive in the next generation
 // Returns 1 if the cell will be alive and 0 if the cell will be dead in the next generation
 const isAliveNextGeneration = (currentGeneration, cellRow, cellColumn) => {
-  
+  const liveNeighbors = countLiveNeighbors(currentGeneration, cellRow, cellColumn);
+  let isAlive = currentGeneration[cellRow][cellColumn];
+
+  if (isAlive) {
+    if (liveNeighbors !== 2 && liveNeighbors !== 3) {
+      isAlive = 0;
+    }
+  } else {
+    if (liveNeighbors === 3) {
+      isAlive = 1;
+    }
+  }
+
+  return isAlive;
 };
 
 // Takes an array containing the current generation as an argument
