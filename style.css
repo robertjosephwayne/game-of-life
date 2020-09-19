@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+table {
+  width: 500px;
+  height: 500px;
+  margin: 30px auto;
+  background-color: lightgray;
+  border: 5px solid darkslategray;
+}
+
+.alive {
+  background-color: green;
+}
+
+.dead {
+
+}
+
+#game-config {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
