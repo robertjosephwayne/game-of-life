@@ -136,3 +136,5 @@ currentGeneration[1][2] = 1;
 currentGeneration[2][0] = 1;
 currentGeneration[2][1] = 1;
 currentGeneration[2][2] = 1;
+
+render(currentGeneration);
