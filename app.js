@@ -123,7 +123,7 @@ const initializeGame = initialGeneration => {
   render(currentGeneration);
 };
 
-const getEmptyGeneration = (rows = 10, columns = 10) => {
+const getEmptyGeneration = (rows = 20, columns = 20) => {
   const emptyGeneration = [];
   for (let i = 0; i < rows; i++) {
     emptyGeneration[i] = [];
@@ -143,6 +143,18 @@ const getGliderPattern = () => {
   gliderPattern[5][4] = 1;
   gliderPattern[5][5] = 1;
   return gliderPattern;
+}
+
+const getSmallExploderPattern = () => {
+  const smallExploderPattern = getEmptyGeneration();
+  smallExploderPattern[8][9] = 1;
+  smallExploderPattern[9][8] = 1;
+  smallExploderPattern[9][9] = 1;
+  smallExploderPattern[9][10] = 1;
+  smallExploderPattern[10][8] = 1;
+  smallExploderPattern[10][10] = 1;
+  smallExploderPattern[11][9] = 1;
+  return smallExploderPattern;
 }
 
 const getBlockPattern = () => {
@@ -174,7 +186,7 @@ const getBoatPattern = () => {
 }
 
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getGliderPattern();
+const startingGeneration = getSmallExploderPattern();
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
