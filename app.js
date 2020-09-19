@@ -175,7 +175,7 @@ function getEmptyGeneration(rows = 20, columns = 20) {
   return emptyGeneration;
 }
 
-function getGliderPattern(startingRow = 0, startingColumn = 0) {
+function getGliderPattern(startingRow = 8, startingColumn = 8) {
   const gliderPattern = getEmptyGeneration();
   gliderPattern[startingRow][startingColumn + 1] = 1;
   gliderPattern[startingRow + 1][startingColumn + 2] = 1;
@@ -185,7 +185,7 @@ function getGliderPattern(startingRow = 0, startingColumn = 0) {
   return gliderPattern;
 }
 
-function getSmallExploderPattern(startingRow = 0, startingColumn = 0) {
+function getSmallExploderPattern(startingRow = 7, startingColumn = 9) {
   const smallExploderPattern = getEmptyGeneration();
   smallExploderPattern[startingRow][startingColumn + 1] = 1;
   smallExploderPattern[startingRow + 1][startingColumn] = 1;
@@ -197,7 +197,7 @@ function getSmallExploderPattern(startingRow = 0, startingColumn = 0) {
   return smallExploderPattern;
 }
 
-function getExploderPattern(startingRow = 0, startingColumn = 0) {
+function getExploderPattern(startingRow = 8, startingColumn = 8) {
   const exploderPattern = getEmptyGeneration();
   exploderPattern[startingRow][startingColumn] = 1;
   exploderPattern[startingRow][startingColumn + 2] = 1;
@@ -214,7 +214,7 @@ function getExploderPattern(startingRow = 0, startingColumn = 0) {
   return exploderPattern;
 }
 
-function getTenCellRowPattern(startingRow = 0, startingColumn = 0) {
+function getTenCellRowPattern(startingRow = 9, startingColumn = 5) {
   const tenCellRowPattern = getEmptyGeneration();
   const endingColumn = startingColumn + 10;
   for (let i = startingColumn; i < endingColumn; i++) {
@@ -224,7 +224,7 @@ function getTenCellRowPattern(startingRow = 0, startingColumn = 0) {
   return tenCellRowPattern;
 }
 
-function getLightweightSpaceshipPattern(startingRow = 0, startingColumn = 0) {
+function getLightweightSpaceshipPattern(startingRow = 8, startingColumn = 8) {
   const lightweightSpaceshipPattern = getEmptyGeneration();
   lightweightSpaceshipPattern[startingRow][startingColumn + 1] = 1
   lightweightSpaceshipPattern[startingRow][startingColumn + 2] = 1
@@ -238,7 +238,7 @@ function getLightweightSpaceshipPattern(startingRow = 0, startingColumn = 0) {
   return lightweightSpaceshipPattern;
 }
 
-function getBlockPattern(startingRow = 0, startingColumn = 0) {
+function getBlockPattern(startingRow = 9, startingColumn = 9) {
   const blockPattern = getEmptyGeneration();
   blockPattern[startingRow][startingColumn] = 1;
   blockPattern[startingRow][startingColumn + 1] = 1;
@@ -247,7 +247,7 @@ function getBlockPattern(startingRow = 0, startingColumn = 0) {
   return blockPattern;
 }
 
-function getTubPattern(startingRow = 0, startingColumn = 0) {
+function getTubPattern(startingRow = 8, startingColumn = 8) {
   const tubPattern = getEmptyGeneration();
   tubPattern[startingRow][startingColumn + 1] = 1;
   tubPattern[startingRow + 1][startingColumn] = 1;
@@ -256,7 +256,7 @@ function getTubPattern(startingRow = 0, startingColumn = 0) {
   return tubPattern;
 }
 
-function getBoatPattern(startingRow = 0, startingColumn = 0) {
+function getBoatPattern(startingRow = 8, startingColumn = 8) {
   const boatPattern = getEmptyGeneration();
   boatPattern[startingRow][startingColumn + 1] = 1;
   boatPattern[startingRow + 1][startingColumn] = 1;
