@@ -120,3 +120,19 @@ const tick = () => {
   setCurrentGeneration(nextGeneration);
   render(nextGeneration);
 };
+
+let currentGeneration = [];
+
+for (let i = 0; i < 10; i++) {
+  currentGeneration[i] = [];
+
+  for (let j = 0; j < 10; j++) {
+    currentGeneration[i][j] = 0;
+  }
+}
+
+currentGeneration[0][1] = 1;
+currentGeneration[1][2] = 1;
+currentGeneration[2][0] = 1;
+currentGeneration[2][1] = 1;
+currentGeneration[2][2] = 1;
