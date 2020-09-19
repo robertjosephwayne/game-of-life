@@ -118,21 +118,35 @@ const tick = () => {
   render(nextGeneration);
 };
 
-let currentGeneration = [];
+const initializeGame = initialGeneration => {
+  currentGeneration = initialGeneration;
+  render(currentGeneration);
+};
 
-for (let i = 0; i < 10; i++) {
-  currentGeneration[i] = [];
-  for (let j = 0; j < 10; j++) {
-    currentGeneration[i][j] = 0;
+const getEmptyGeneration = (rows = 10, columns = 10) => {
+  const emptyGeneration = [];
+  for (let i = 0; i < rows; i++) {
+    emptyGeneration[i] = [];
+    for (let j = 0; j < columns; j++) {
+      emptyGeneration[i][j] = 0;
+    }
   }
-}
 
-currentGeneration[0][1] = 1;
-currentGeneration[1][2] = 1;
-currentGeneration[2][0] = 1;
-currentGeneration[2][1] = 1;
-currentGeneration[2][2] = 1;
+  return emptyGeneration;
+};
 
-render(currentGeneration);
+const getBlockPattern = () => {
+  const blockPattern = getEmptyGeneration();
+  blockPattern[4][4] = 1;
+  blockPattern[4][5] = 1;
+  blockPattern[5][4] = 1;
+  blockPattern[5][5] = 1;
+  return blockPattern;
+};
+
+let currentGeneration = getEmptyGeneration();
+const startingGeneration = getBlockPattern();
+initializeGame(startingGeneration);
+
 const tickButton = document.querySelector('#tick');
 tickButton.addEventListener('click', tick);
