@@ -135,6 +135,16 @@ const getEmptyGeneration = (rows = 10, columns = 10) => {
   return emptyGeneration;
 };
 
+const getGliderPattern = () => {
+  const gliderPattern = getEmptyGeneration();
+  gliderPattern[3][4] = 1;
+  gliderPattern[4][5] = 1;
+  gliderPattern[5][3] = 1;
+  gliderPattern[5][4] = 1;
+  gliderPattern[5][5] = 1;
+  return gliderPattern;
+}
+
 const getBlockPattern = () => {
   const blockPattern = getEmptyGeneration();
   blockPattern[4][4] = 1;
@@ -153,8 +163,18 @@ const getTubPattern = () => {
   return tubPattern;
 }
 
+const getBoatPattern = () => {
+  const boatPattern = getEmptyGeneration();
+  boatPattern[4][5] = 1;
+  boatPattern[5][4] = 1;
+  boatPattern[5][6] = 1;
+  boatPattern[6][5] = 1;
+  boatPattern[6][6] = 1;
+  return boatPattern;
+}
+
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getTubPattern();
+const startingGeneration = getGliderPattern();
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
