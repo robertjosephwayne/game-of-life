@@ -135,49 +135,49 @@ const getEmptyGeneration = (rows = 20, columns = 20) => {
   return emptyGeneration;
 };
 
-const getGliderPattern = () => {
+const getGliderPattern = (startingRow = 0, startingColumn = 0) => {
   const gliderPattern = getEmptyGeneration();
-  gliderPattern[3][4] = 1;
-  gliderPattern[4][5] = 1;
-  gliderPattern[5][3] = 1;
-  gliderPattern[5][4] = 1;
-  gliderPattern[5][5] = 1;
+  gliderPattern[startingRow][startingColumn + 1] = 1;
+  gliderPattern[startingRow + 1][startingColumn + 2] = 1;
+  gliderPattern[startingRow + 2][startingColumn] = 1;
+  gliderPattern[startingRow + 2][startingColumn + 1] = 1;
+  gliderPattern[startingRow + 2][startingColumn + 2] = 1;
   return gliderPattern;
 };
 
-const getSmallExploderPattern = () => {
+const getSmallExploderPattern = (startingRow = 0, startingColumn = 0) => {
   const smallExploderPattern = getEmptyGeneration();
-  smallExploderPattern[8][9] = 1;
-  smallExploderPattern[9][8] = 1;
-  smallExploderPattern[9][9] = 1;
-  smallExploderPattern[9][10] = 1;
-  smallExploderPattern[10][8] = 1;
-  smallExploderPattern[10][10] = 1;
-  smallExploderPattern[11][9] = 1;
+  smallExploderPattern[startingRow][startingColumn + 1] = 1;
+  smallExploderPattern[startingRow + 1][startingColumn] = 1;
+  smallExploderPattern[startingRow + 1][startingColumn + 1] = 1;
+  smallExploderPattern[startingRow + 1][startingColumn + 2] = 1;
+  smallExploderPattern[startingRow + 2][startingColumn] = 1;
+  smallExploderPattern[startingRow + 2][startingColumn + 2] = 1;
+  smallExploderPattern[startingRow + 3][startingColumn + 1] = 1;
   return smallExploderPattern;
 };
 
-const getExploderPattern = () => {
+const getExploderPattern = (startingRow = 0, startingColumn = 0) => {
   const exploderPattern = getEmptyGeneration();
-  exploderPattern[7][7] = 1;
-  exploderPattern[7][9] = 1;
-  exploderPattern[7][11] = 1;
-  exploderPattern[8][7] = 1;
-  exploderPattern[8][11] = 1;
-  exploderPattern[9][7] = 1;
-  exploderPattern[9][11] = 1;
-  exploderPattern[10][7] = 1;
-  exploderPattern[10][11] = 1;
-  exploderPattern[11][7] = 1;
-  exploderPattern[11][9] = 1;
-  exploderPattern[11][11] = 1;
+  // starting row = 7
+  // starting column = 7
+  exploderPattern[startingRow][startingColumn] = 1;
+  exploderPattern[startingRow][startingColumn + 2] = 1;
+  exploderPattern[startingRow][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 1][startingColumn] = 1;
+  exploderPattern[startingRow + 1][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 2][startingColumn] = 1;
+  exploderPattern[startingRow + 2][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 3][startingColumn] = 1;
+  exploderPattern[startingRow + 3][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 4][startingColumn] = 1;
+  exploderPattern[startingRow + 4][startingColumn + 2] = 1;
+  exploderPattern[startingRow + 4][startingColumn + 4] = 1;
   return exploderPattern;
 };
 
-const getTenCellRowPattern = () => {
+const getTenCellRowPattern = (startingRow = 0, startingColumn = 0) => {
   const tenCellRowPattern = getEmptyGeneration();
-  const startingRow = 9;
-  const startingColumn = 5;
   const endingColumn = startingColumn + 10;
   for (let i = startingColumn; i < endingColumn; i++) {
     tenCellRowPattern[startingRow][i] = 1;
@@ -200,36 +200,36 @@ const getLightweightSpaceshipPattern = (startingRow = 0, startingColumn = 0) => 
   return lightweightSpaceshipPattern;
 }
 
-const getBlockPattern = () => {
+const getBlockPattern = (startingRow = 0, startingColumn = 0) => {
   const blockPattern = getEmptyGeneration();
-  blockPattern[4][4] = 1;
-  blockPattern[4][5] = 1;
-  blockPattern[5][4] = 1;
-  blockPattern[5][5] = 1;
+  blockPattern[startingRow][startingColumn] = 1;
+  blockPattern[startingRow][startingColumn + 1] = 1;
+  blockPattern[startingRow + 1][startingColumn] = 1;
+  blockPattern[startingRow + 1][startingColumn + 1] = 1;
   return blockPattern;
 };
 
-const getTubPattern = () => {
+const getTubPattern = (startingRow = 0, startingColumn = 0) => {
   const tubPattern = getEmptyGeneration();
-  tubPattern[3][4] = 1;
-  tubPattern[4][3] = 1;
-  tubPattern[4][5] = 1;
-  tubPattern[5][4] = 1;
+  tubPattern[startingRow][startingColumn + 1] = 1;
+  tubPattern[startingRow + 1][startingColumn] = 1;
+  tubPattern[startingRow + 1][startingColumn + 2] = 1;
+  tubPattern[startingRow + 2][startingColumn + 1] = 1;
   return tubPattern;
 };
 
-const getBoatPattern = () => {
+const getBoatPattern = (startingRow = 0, startingColumn = 0) => {
   const boatPattern = getEmptyGeneration();
-  boatPattern[4][5] = 1;
-  boatPattern[5][4] = 1;
-  boatPattern[5][6] = 1;
-  boatPattern[6][5] = 1;
-  boatPattern[6][6] = 1;
+  boatPattern[startingRow][startingColumn + 1] = 1;
+  boatPattern[startingRow + 1][startingColumn] = 1;
+  boatPattern[startingRow + 1][startingColumn + 2] = 1;
+  boatPattern[startingRow + 2][startingColumn + 1] = 1;
+  boatPattern[startingRow + 2][startingColumn + 2] = 1;
   return boatPattern;
 };
 
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getLightweightSpaceshipPattern(8, 8);
+const startingGeneration = getBoatPattern();
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
