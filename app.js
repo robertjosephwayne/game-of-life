@@ -144,8 +144,17 @@ const getBlockPattern = () => {
   return blockPattern;
 };
 
+const getTubPattern = () => {
+  const tubPattern = getEmptyGeneration();
+  tubPattern[3][4] = 1;
+  tubPattern[4][3] = 1;
+  tubPattern[4][5] = 1;
+  tubPattern[5][4] = 1;
+  return tubPattern;
+}
+
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getBlockPattern();
+const startingGeneration = getTubPattern();
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
