@@ -84,7 +84,31 @@ const countLiveNeighbors = (currentGeneration, cellRow, cellColumn) => {
 // Takes an array containing the next generation as an argument
 // Updates the page to display the next generation
 const render = nextGeneration => {
-  
+  const rows = nextGeneration.length;
+  const columns = nextGeneration[0].length;
+
+  const gameCells = document.createElement('table');
+
+  for (let i = 0; i < rows; i++) {
+    const currentRow = document.createElement('tr');
+    
+    for (let j = 0; j < columns; j++) {
+      const cell = document.createElement('td')
+      
+      if (nextGeneration[i][j]) {
+        cell.className = 'alive';
+      } else {
+        cell.className = 'dead';
+      }
+      currentRow.appendChild(cell);
+    }
+
+    gameCells.appendChild(currentRow);
+  }
+
+  const gameDisplay = document.querySelector('#game-display');
+  gameDisplay.innerHTML = '';
+  gameDisplay.appendChild(gameCells);
 };
 
 // Get the next generation of cells
