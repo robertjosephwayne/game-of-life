@@ -1,11 +1,11 @@
 // Retrieve and return an array containing the current generation of cells
-const getCurrentGeneration = () => {
+function getCurrentGeneration() {
   return currentGeneration;
-};
+}
 
 // Takes an array containing the current generation of cells as an argument
 // Returns an array containing the next generation of cells
-const getNextGeneration = currentGeneration => {
+function getNextGeneration(currentGeneration) {
   const rows = currentGeneration.length;
   const columns = currentGeneration[0].length;
   const nextGeneration = [];
@@ -19,18 +19,18 @@ const getNextGeneration = currentGeneration => {
   }
 
   return nextGeneration;
-};
+}
 
 // Updates the variable containing the current generation of cells to the next generation
-const setCurrentGeneration = nextGeneration => {
+function setCurrentGeneration(nextGeneration) {
   currentGeneration = nextGeneration;
-};
+}
 
 // Takes an array containing the current generation as an argument
 // Also takes a specific cell row and cell column number as arguments
 // Returns a boolean value indicating whether the cell will be alive in the next generation
 // Returns 1 if the cell will be alive and 0 if the cell will be dead in the next generation
-const isAliveNextGeneration = (currentGeneration, cellRow, cellColumn) => {
+function isAliveNextGeneration(currentGeneration, cellRow, cellColumn) {
   const liveNeighbors = countLiveNeighbors(currentGeneration, cellRow, cellColumn);
   let isAlive = currentGeneration[cellRow][cellColumn];
 
@@ -45,14 +45,14 @@ const isAliveNextGeneration = (currentGeneration, cellRow, cellColumn) => {
   }
 
   return isAlive;
-};
+}
 
 // Takes an array containing the current generation as an argument
 // Also takes a specific cell row and cell column number as arguments
 // The neighbors are the 8 cells surrounding the cell
 // If there is overflow, the pattern is assumed to continue on the other side of the grid
 // Returns the number of neighbors that are alive in the current generation
-const countLiveNeighbors = (currentGeneration, cellRow, cellColumn) => {
+function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
   const lastRow = currentGeneration.length - 1;
   const lastColumn = currentGeneration[0].length - 1;
   let liveNeighbors = 0;
@@ -79,11 +79,11 @@ const countLiveNeighbors = (currentGeneration, cellRow, cellColumn) => {
   }
 
   return liveNeighbors;
-};
+}
 
 // Takes an array containing the next generation as an argument
 // Updates the page to display the next generation
-const render = nextGeneration => {
+function render(nextGeneration) {
   const rows = nextGeneration.length;
   const columns = nextGeneration[0].length;
   const gameCells = document.createElement('table');
@@ -106,24 +106,24 @@ const render = nextGeneration => {
   const gameDisplay = document.querySelector('#game-display');
   gameDisplay.innerHTML = '';
   gameDisplay.appendChild(gameCells);
-};
+}
 
 // Get the next generation of cells
 // Update the current generation to the next generation
 // Render the next generation to the page
-const tick = () => {
+function tick() {
   const currentGeneration = getCurrentGeneration();
   const nextGeneration = getNextGeneration(currentGeneration);
   setCurrentGeneration(nextGeneration);
   render(nextGeneration);
-};
+}
 
-const initializeGame = initialGeneration => {
+function initializeGame(initialGeneration) {
   currentGeneration = initialGeneration;
   render(currentGeneration);
-};
+}
 
-const getEmptyGeneration = (rows = 20, columns = 20) => {
+function getEmptyGeneration(rows = 20, columns = 20) {
   const emptyGeneration = [];
   for (let i = 0; i < rows; i++) {
     emptyGeneration[i] = [];
@@ -133,9 +133,9 @@ const getEmptyGeneration = (rows = 20, columns = 20) => {
   }
 
   return emptyGeneration;
-};
+}
 
-const getGliderPattern = (startingRow = 0, startingColumn = 0) => {
+function getGliderPattern(startingRow = 0, startingColumn = 0) {
   const gliderPattern = getEmptyGeneration();
   gliderPattern[startingRow][startingColumn + 1] = 1;
   gliderPattern[startingRow + 1][startingColumn + 2] = 1;
@@ -143,9 +143,9 @@ const getGliderPattern = (startingRow = 0, startingColumn = 0) => {
   gliderPattern[startingRow + 2][startingColumn + 1] = 1;
   gliderPattern[startingRow + 2][startingColumn + 2] = 1;
   return gliderPattern;
-};
+}
 
-const getSmallExploderPattern = (startingRow = 0, startingColumn = 0) => {
+function getSmallExploderPattern(startingRow = 0, startingColumn = 0) {
   const smallExploderPattern = getEmptyGeneration();
   smallExploderPattern[startingRow][startingColumn + 1] = 1;
   smallExploderPattern[startingRow + 1][startingColumn] = 1;
@@ -155,12 +155,10 @@ const getSmallExploderPattern = (startingRow = 0, startingColumn = 0) => {
   smallExploderPattern[startingRow + 2][startingColumn + 2] = 1;
   smallExploderPattern[startingRow + 3][startingColumn + 1] = 1;
   return smallExploderPattern;
-};
+}
 
-const getExploderPattern = (startingRow = 0, startingColumn = 0) => {
+function getExploderPattern(startingRow = 0, startingColumn = 0) {
   const exploderPattern = getEmptyGeneration();
-  // starting row = 7
-  // starting column = 7
   exploderPattern[startingRow][startingColumn] = 1;
   exploderPattern[startingRow][startingColumn + 2] = 1;
   exploderPattern[startingRow][startingColumn + 4] = 1;
@@ -174,9 +172,9 @@ const getExploderPattern = (startingRow = 0, startingColumn = 0) => {
   exploderPattern[startingRow + 4][startingColumn + 2] = 1;
   exploderPattern[startingRow + 4][startingColumn + 4] = 1;
   return exploderPattern;
-};
+}
 
-const getTenCellRowPattern = (startingRow = 0, startingColumn = 0) => {
+function getTenCellRowPattern(startingRow = 0, startingColumn = 0) {
   const tenCellRowPattern = getEmptyGeneration();
   const endingColumn = startingColumn + 10;
   for (let i = startingColumn; i < endingColumn; i++) {
@@ -184,9 +182,9 @@ const getTenCellRowPattern = (startingRow = 0, startingColumn = 0) => {
   }
 
   return tenCellRowPattern;
-};
+}
 
-const getLightweightSpaceshipPattern = (startingRow = 0, startingColumn = 0) => {
+function getLightweightSpaceshipPattern(startingRow = 0, startingColumn = 0) {
   const lightweightSpaceshipPattern = getEmptyGeneration();
   lightweightSpaceshipPattern[startingRow][startingColumn + 1] = 1
   lightweightSpaceshipPattern[startingRow][startingColumn + 2] = 1
@@ -200,25 +198,25 @@ const getLightweightSpaceshipPattern = (startingRow = 0, startingColumn = 0) => 
   return lightweightSpaceshipPattern;
 }
 
-const getBlockPattern = (startingRow = 0, startingColumn = 0) => {
+function getBlockPattern(startingRow = 0, startingColumn = 0) {
   const blockPattern = getEmptyGeneration();
   blockPattern[startingRow][startingColumn] = 1;
   blockPattern[startingRow][startingColumn + 1] = 1;
   blockPattern[startingRow + 1][startingColumn] = 1;
   blockPattern[startingRow + 1][startingColumn + 1] = 1;
   return blockPattern;
-};
+}
 
-const getTubPattern = (startingRow = 0, startingColumn = 0) => {
+function getTubPattern(startingRow = 0, startingColumn = 0) {
   const tubPattern = getEmptyGeneration();
   tubPattern[startingRow][startingColumn + 1] = 1;
   tubPattern[startingRow + 1][startingColumn] = 1;
   tubPattern[startingRow + 1][startingColumn + 2] = 1;
   tubPattern[startingRow + 2][startingColumn + 1] = 1;
   return tubPattern;
-};
+}
 
-const getBoatPattern = (startingRow = 0, startingColumn = 0) => {
+function getBoatPattern(startingRow = 0, startingColumn = 0) {
   const boatPattern = getEmptyGeneration();
   boatPattern[startingRow][startingColumn + 1] = 1;
   boatPattern[startingRow + 1][startingColumn] = 1;
@@ -226,11 +224,22 @@ const getBoatPattern = (startingRow = 0, startingColumn = 0) => {
   boatPattern[startingRow + 2][startingColumn + 1] = 1;
   boatPattern[startingRow + 2][startingColumn + 2] = 1;
   return boatPattern;
-};
+}
+
+function handleStart(event) {
+  const ticker = setInterval(tick, 1000);
+  const startButton = document.querySelector('#start');
+  const stopButton = document.querySelector('#stop');
+  startButton.addEventListener('click', () => clearInterval(ticker));
+  stopButton.addEventListener('click', () => clearInterval(ticker));
+}
 
 let currentGeneration = getEmptyGeneration();
-const startingGeneration = getBoatPattern();
+const startingGeneration = getTenCellRowPattern();
 initializeGame(startingGeneration);
 
 const tickButton = document.querySelector('#tick');
 tickButton.addEventListener('click', tick);
+
+const startButton = document.querySelector('#start');
+startButton.addEventListener('click', handleStart)
