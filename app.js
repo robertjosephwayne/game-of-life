@@ -115,5 +115,8 @@ const render = nextGeneration => {
 // Update the current generation to the next generation
 // Render the next generation to the page
 const tick = () => {
-  
+  const currentGeneration = getCurrentGeneration();
+  const nextGeneration = getNextGeneration(currentGeneration);
+  setCurrentGeneration(nextGeneration);
+  render(nextGeneration);
 };
