@@ -290,6 +290,14 @@ function handleCellClick(event) {
   render();
 }
 
+function handleReset() {
+  const patternList = document.querySelector('#patterns');
+  const activePattern = patternList.value;
+  const initialGeneration = getPattern(activePattern);
+  setCurrentGeneration(initialGeneration);
+  render();
+}
+
 function handlePatternSelection(event) {
   const patternName = event.target.value;
   const pattern = getPattern(patternName);
@@ -304,6 +312,9 @@ tickButton.addEventListener('click', tick);
 
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', handleStart);
+
+const resetButton = document.querySelector('#reset');
+resetButton.addEventListener('click', handleReset);
 
 const patterns = document.querySelector('#patterns');
 patterns.addEventListener('change', handlePatternSelection);
