@@ -86,15 +86,12 @@ const countLiveNeighbors = (currentGeneration, cellRow, cellColumn) => {
 const render = nextGeneration => {
   const rows = nextGeneration.length;
   const columns = nextGeneration[0].length;
-
   const gameCells = document.createElement('table');
 
   for (let i = 0; i < rows; i++) {
     const currentRow = document.createElement('tr');
-    
     for (let j = 0; j < columns; j++) {
       const cell = document.createElement('td')
-      
       if (nextGeneration[i][j]) {
         cell.className = 'alive';
       } else {
@@ -125,7 +122,6 @@ let currentGeneration = [];
 
 for (let i = 0; i < 10; i++) {
   currentGeneration[i] = [];
-
   for (let j = 0; j < 10; j++) {
     currentGeneration[i][j] = 0;
   }
