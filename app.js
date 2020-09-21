@@ -305,6 +305,8 @@ function handlePatternSelection(event) {
   render();
 }
 
+let currentGeneration = getEmptyGeneration();;
+
 initializeGame();
 
 const tickButton = document.querySelector('#tick');
