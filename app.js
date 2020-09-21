@@ -1,3 +1,5 @@
+"use strict"
+
 // Retrieve and return an array containing the current generation of cells
 function getCurrentGeneration() {
   return currentGeneration;
