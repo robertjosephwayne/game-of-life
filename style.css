@@ -12,6 +12,11 @@ table {
   margin: 30px auto;
   background-color: lightgray;
   border: 5px solid darkslategray;
+  border-spacing: 0;
+}
+
+td {
+  border: 1px solid lightgray;
 }
 
 .alive {
