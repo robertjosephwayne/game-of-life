@@ -2,7 +2,9 @@
 
 // Retrieve and return an array containing the current generation of cells
 function getCurrentGeneration() {
-  return currentGeneration;
+  const localStorage = window.localStorage;
+  const currentGenerationJSON = localStorage.getItem('currentGeneration');
+  return JSON.parse(currentGenerationJSON);
 }
 
 // Takes an array containing the current generation of cells as an argument
@@ -25,7 +27,9 @@ function getNextGeneration(currentGeneration) {
 
 // Updates the variable containing the current generation of cells to the next generation
 function setCurrentGeneration(nextGeneration) {
-  currentGeneration = nextGeneration;
+  const localStorage = window.localStorage;
+  const nextGenerationJSON = JSON.stringify(nextGeneration);
+  localStorage.setItem('currentGeneration', nextGenerationJSON);
 }
 
 // Takes an array containing the current generation as an argument
@@ -306,8 +310,6 @@ function handlePatternSelection(event) {
   setCurrentGeneration(pattern);
   render();
 }
-
-let currentGeneration = getEmptyGeneration();;
 
 initializeGame();
 
