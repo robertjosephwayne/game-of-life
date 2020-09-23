@@ -28,3 +28,7 @@ td {
   display: flex;
   justify-content: center;
 }
+
+#generation-count {
+  text-align: center;
+}

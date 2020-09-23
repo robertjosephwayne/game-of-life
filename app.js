@@ -116,6 +116,8 @@ function render() {
   const gameDisplay = document.querySelector('#game-display');
   gameDisplay.innerHTML = '';
   gameDisplay.appendChild(gameCells);
+
+  renderGenerationCount();
 }
 
 // Get the next generation of cells
@@ -125,12 +127,14 @@ function tick() {
   const currentGeneration = getCurrentGeneration();
   const nextGeneration = getNextGeneration(currentGeneration);
   setCurrentGeneration(nextGeneration);
+  incrementGenerationCount();
   render();
 }
 
 function initializeGame(rows = 20, columns = 20) {
   const initialGeneration = getEmptyGeneration(rows, columns);
   setCurrentGeneration(initialGeneration);
+  resetGenerationCount();
   render();
 }
 
@@ -301,6 +305,7 @@ function handleReset() {
   const activePattern = patternList.value;
   const initialGeneration = getPattern(activePattern);
   setCurrentGeneration(initialGeneration);
+  resetGenerationCount();
   render();
 }
 
@@ -309,6 +314,33 @@ function handlePatternSelection(event) {
   const pattern = getPattern(patternName);
   setCurrentGeneration(pattern);
   render();
+}
+
+function incrementGenerationCount() {
+  const currentGenerationCount = getCurrentGenerationCount();
+  setCurrentGenerationCount(currentGenerationCount + 1);
+}
+
+function getCurrentGenerationCount() {
+  const localStorage = window.localStorage;
+  const currentGenerationCount = localStorage.getItem('currentGenerationCount');
+  return parseInt(currentGenerationCount);
+}
+
+function setCurrentGenerationCount(newCount) {
+  const localStorage = window.localStorage;
+  localStorage.setItem('currentGenerationCount', newCount);
+}
+
+function renderGenerationCount() {
+  const localStorage = window.localStorage;
+  const currentGenerationCount = getCurrentGenerationCount();
+  const generationCountContainer = document.querySelector('#generation-count');
+  generationCountContainer.innerText = currentGenerationCount;
+}
+
+function resetGenerationCount() {
+  setCurrentGenerationCount(0);
 }
 
 initializeGame();
