@@ -134,6 +134,7 @@ function tick() {
 function initializeGame(rows = 20, columns = 20) {
   const initialGeneration = getEmptyGeneration(rows, columns);
   setCurrentGeneration(initialGeneration);
+  handleTickSpeedSelection();
   resetGenerationCount();
   render();
 }
@@ -276,12 +277,20 @@ function getBoatPattern(startingRow = 8, startingColumn = 8) {
   return boatPattern;
 }
 
-function handleStart(event) {
-  const ticker = setInterval(tick, 700);
+function handleStart() {
+  const tickInterval = getTickInterval();
+  const ticker = setInterval(tick, tickInterval);
   const startButton = document.querySelector('#start');
   const stopButton = document.querySelector('#stop');
+  const tickSpeed = document.querySelector('#tick-speed');
   startButton.addEventListener('click', () => clearInterval(ticker));
   stopButton.addEventListener('click', () => clearInterval(ticker));
+  tickSpeed.addEventListener('change', () => clearInterval(ticker));
+  setActivityStatus('active');
+}
+
+function handleStop() {
+  setActivityStatus('inactive');
 }
 
 function handleCellClick(event) {
@@ -316,6 +325,18 @@ function handlePatternSelection(event) {
   render();
 }
 
+function handleTickSpeedSelection() {
+  const localStorage = window.localStorage;
+  const tickSpeed = document.querySelector('#tick-speed');
+  const rangeMax = tickSpeed.getAttribute('max');
+  const rangeValue = tickSpeed.value;
+  const newTickInterval = rangeMax - rangeValue;
+  setTickInterval(newTickInterval);
+
+  const activityStatus = getActivityStatus();
+  if (activityStatus === 'active') handleStart();
+}
+
 function incrementGenerationCount() {
   const currentGenerationCount = getCurrentGenerationCount();
   setCurrentGenerationCount(currentGenerationCount + 1);
@@ -343,6 +364,27 @@ function resetGenerationCount() {
   setCurrentGenerationCount(0);
 }
 
+function getTickInterval() {
+  const localStorage = window.localStorage;
+  const tickInterval = localStorage.getItem('tickInterval');
+  return parseInt(tickInterval);
+}
+
+function setTickInterval(newTickInterval) {
+  const localStorage = window.localStorage;
+  localStorage.setItem('tickInterval', newTickInterval);
+}
+
+function getActivityStatus() {
+  const localStorage = window.localStorage;
+  return localStorage.getItem('activityStatus');
+}
+
+function setActivityStatus(status) {
+  const localStorage = window.localStorage;
+  localStorage.setItem('activityStatus', status);
+}
+
 initializeGame();
 
 const tickButton = document.querySelector('#tick');
@@ -351,8 +393,14 @@ tickButton.addEventListener('click', tick);
 const startButton = document.querySelector('#start');
 startButton.addEventListener('click', handleStart);
 
+const stopButton = document.querySelector('#stop');
+stopButton.addEventListener('click', handleStop);
+
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', handleReset);
 
 const patterns = document.querySelector('#patterns');
 patterns.addEventListener('change', handlePatternSelection);
+
+const tickSpeed = document.querySelector('#tick-speed');
+tickSpeed.addEventListener('change', handleTickSpeedSelection);
