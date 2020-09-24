@@ -24,9 +24,17 @@
         <option value="tub">Tub</option>
         <option value="boat">Boat</option>
       </select>
-      <input type="range" id="tick-speed" min="0" max="2000">
+    </div>
+    <div>
+      <label for="tick-speed">Tick Speed:</label>
+      <input type="range" id="tick-speed" min="0" max="1000">
+    </div>
+    <div>
+      <label for="grid-size">Grid Size:</label>
+      <input type="range" id="grid-size" min="25" max="50">
     </div>
     <div id="generation-count">0</div>
+    <div id="game-status"></div>
     <script src="app.js"></script>
   </body>
 </html>
