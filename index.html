@@ -33,8 +33,17 @@
       <label for="grid-size">Grid Size:</label>
       <input type="range" id="grid-size" min="25" max="50">
     </div>
-    <div id="generation-count">0</div>
     <div id="game-status"></div>
+    <div>
+      <fieldset>
+        <legend>Random Life:</legend>
+        <label for="random-life-on">On</label>
+        <input type="radio" id="random-life-on" name="random-life" value="active">
+        <label for="random-life-off">Off</label>
+        <input type="radio" id="random-life-off" name="random-life" value="inactive" checked>
+      </fieldset>
+    </div>
+    <div id="generation-count">0</div>
     <script src="app.js"></script>
   </body>
 </html>

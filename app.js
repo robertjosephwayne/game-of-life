@@ -12,7 +12,7 @@ function getCurrentGeneration() {
 function getNextGeneration(currentGeneration) {
   const rows = currentGeneration.length;
   const columns = currentGeneration[0].length;
-  const nextGeneration = [];
+  let nextGeneration = [];
 
   for (let i = 0; i < rows; i++) {
     nextGeneration[i] = []; 
@@ -20,6 +20,11 @@ function getNextGeneration(currentGeneration) {
       const isAlive = isAliveNextGeneration(currentGeneration, i, j);
       nextGeneration[i][j] = isAlive;
     }
+  }
+
+  const randomLifeStatus = getRandomLifeStatus();
+  if (randomLifeStatus === 'active') {
+    nextGeneration = addRandomLife(nextGeneration);
   }
 
   return nextGeneration;
@@ -134,11 +139,10 @@ function tick() {
 }
 
 function initializeGame() {
-  initializeGridSize();
-  
   const initialGeneration = getEmptyGeneration();
+  initializeGridSize();
   setCurrentGeneration(initialGeneration);
-  
+  initializeRandomLife();
   handleTickSpeedSelection();
   resetGenerationCount();
   render();
@@ -412,6 +416,40 @@ function setActivityStatus(status) {
   localStorage.setItem('activityStatus', status);
 }
 
+function initializeRandomLife() {
+  const localStorage = window.localStorage;
+  localStorage.setItem('randomLifeStatus', 'inactive');
+}
+
+function handleRandomLifeSelection(event) {
+  const randomLifeStatus = event.target.value;
+  setRandomLifeStatus(randomLifeStatus);
+}
+
+function getRandomLifeStatus() {
+  const localStorage = window.localStorage;
+  const randomLifeStatus = localStorage.getItem('randomLifeStatus');
+  return randomLifeStatus;
+}
+
+function setRandomLifeStatus(status) {
+  const localStorage = window.localStorage;
+  localStorage.setItem('randomLifeStatus', status);
+}
+
+function addRandomLife(generation) {
+  const gridSize = getGridSize();
+  const randomRow = Math.floor(Math.random() * gridSize);
+  const randomColumn = Math.floor(Math.random() * gridSize);
+  const currentCellValue = generation[randomRow][randomColumn];
+  if (currentCellValue) {
+    return addRandomLife(generation);
+  } else {
+    generation[randomRow][randomColumn] = 1;
+    return generation;
+  }
+}
+
 initializeGame();
 
 const tickButton = document.querySelector('#tick');
@@ -434,3 +472,10 @@ tickSpeed.addEventListener('change', handleTickSpeedSelection);
 
 const gridSize = document.querySelector('#grid-size');
 gridSize.addEventListener('change', handleGridSizeSelection);
+
+const randomLifeOn = document.querySelector('#random-life-on');
+randomLifeOn.addEventListener('click', handleRandomLifeSelection);
+
+const randomLifeOff = document.querySelector('#random-life-off');
+randomLifeOff.addEventListener('click', handleRandomLifeSelection);
+
