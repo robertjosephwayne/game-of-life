@@ -91,9 +91,11 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
 // Updates the page to display the next generation
 function render() {
   const currentGeneration = getCurrentGeneration();
-  const rows = currentGeneration.length;
-  const columns = currentGeneration[0].length;
+  const gridSize = getGridSize();
+  const rows = gridSize;
+  const columns = gridSize;
   const gameCells = document.createElement('table');
+  gameCells.id = 'game-board';
   gameCells.addEventListener('click', handleCellClick);
 
   for (let i = 0; i < rows; i++) {
@@ -131,9 +133,12 @@ function tick() {
   render();
 }
 
-function initializeGame(rows = 20, columns = 20) {
-  const initialGeneration = getEmptyGeneration(rows, columns);
+function initializeGame() {
+  initializeGridSize();
+  
+  const initialGeneration = getEmptyGeneration();
   setCurrentGeneration(initialGeneration);
+  
   handleTickSpeedSelection();
   resetGenerationCount();
   render();
@@ -174,7 +179,7 @@ function getPattern(patternName) {
   return pattern;
 }
 
-function getEmptyGeneration(rows = 20, columns = 20) {
+function getEmptyGeneration(rows = 50, columns = 50) {
   const emptyGeneration = [];
   for (let i = 0; i < rows; i++) {
     emptyGeneration[i] = [];
@@ -337,6 +342,28 @@ function handleTickSpeedSelection() {
   if (activityStatus === 'active') handleStart();
 }
 
+function handleGridSizeSelection() {
+  const gridSize = document.querySelector('#grid-size').value;
+  setGridSize(parseInt(gridSize));
+  render();
+}
+
+function initializeGridSize() {
+  const gridSize = document.querySelector('#grid-size').value;
+  setGridSize(parseInt(gridSize));
+}
+
+function getGridSize() {
+  const localStorage = window.localStorage;
+  const gridSize = localStorage.getItem('gridSize');
+  return parseInt(gridSize);
+}
+
+function setGridSize(size) {
+  const localStorage = window.localStorage;
+  localStorage.setItem('gridSize', size);
+}
+
 function incrementGenerationCount() {
   const currentGenerationCount = getCurrentGenerationCount();
   setCurrentGenerationCount(currentGenerationCount + 1);
@@ -404,3 +431,6 @@ patterns.addEventListener('change', handlePatternSelection);
 
 const tickSpeed = document.querySelector('#tick-speed');
 tickSpeed.addEventListener('change', handleTickSpeedSelection);
+
+const gridSize = document.querySelector('#grid-size');
+gridSize.addEventListener('change', handleGridSizeSelection);
