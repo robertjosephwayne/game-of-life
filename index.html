@@ -3,16 +3,26 @@
   <head>
     <meta charset="UTF-8">
     <title>Game of Life</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1>Game of Life</h1>
     <div id="game-display"></div>
     <div id="game-config">
-      <input type="button" id="start" value="Start">
-      <input type="button" id="stop" value="Stop">
-      <input type="button" id="tick" value="Tick">
-      <input type="button" id="reset" value="Reset">
+      <button id="start">
+        <i class="material-icons">play_arrow</i>
+      </button>
+      <button id="stop">
+        <i class="material-icons">pause</i>
+      </button>
+      <button id="tick">
+        <i class="material-icons">skip_next</i>
+      </button>
+      <button id="reset">
+        <i class="material-icons">refresh</i>
+      </button>
       <select name="patterns" id="patterns">
         <option value="empty">Empty</option>
         <option value="glider">Glider</option>
