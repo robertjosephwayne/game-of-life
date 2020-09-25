@@ -45,14 +45,10 @@ function isAliveNextGeneration(currentGeneration, cellRow, cellColumn) {
   const liveNeighbors = countLiveNeighbors(currentGeneration, cellRow, cellColumn);
   let isAlive = currentGeneration[cellRow][cellColumn];
 
-  if (isAlive) {
-    if (liveNeighbors !== 2 && liveNeighbors !== 3) {
+  if (isAlive && liveNeighbors !== 2 && liveNeighbors !== 3) {
       isAlive = 0;
-    }
-  } else {
-    if (liveNeighbors === 3) {
+  } else if (liveNeighbors === 3) {
       isAlive = 1;
-    }
   }
 
   return isAlive;
