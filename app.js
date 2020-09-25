@@ -7,16 +7,15 @@ function getCurrentGeneration() {
   return JSON.parse(currentGenerationJSON);
 }
 
-// Takes an array containing the current generation of cells as an argument
 // Returns an array containing the next generation of cells
-function getNextGeneration(currentGeneration) {
-  const rows = currentGeneration.length;
-  const columns = currentGeneration[0].length;
+function getNextGeneration() {
+  const currentGeneration = getCurrentGeneration();
+  const gridSize = getGridSize();
   let nextGeneration = [];
-
-  for (let i = 0; i < rows; i++) {
+  
+  for (let i = 0; i < gridSize; i++) {
     nextGeneration[i] = []; 
-    for (let j = 0; j < columns; j++) {
+    for (let j = 0; j < gridSize; j++) {
       const isAlive = isAliveNextGeneration(currentGeneration, i, j);
       nextGeneration[i][j] = isAlive;
     }
@@ -88,7 +87,6 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
   return liveNeighbors;
 }
 
-// Takes an array containing the next generation as an argument
 // Updates the page to display the next generation
 function render() {
   const currentGeneration = getCurrentGeneration();
@@ -127,8 +125,7 @@ function render() {
 // Update the current generation to the next generation
 // Render the next generation to the page
 function tick() {
-  const currentGeneration = getCurrentGeneration();
-  const nextGeneration = getNextGeneration(currentGeneration);
+  const nextGeneration = getNextGeneration();
   setCurrentGeneration(nextGeneration);
   incrementGenerationCount();
   render();
@@ -179,11 +176,13 @@ function getPattern(patternName) {
   return pattern;
 }
 
-function getEmptyGeneration(rows = 50, columns = 50) {
+function getEmptyGeneration() {
+  const gridSize = getGridSize();
   const emptyGeneration = [];
-  for (let i = 0; i < rows; i++) {
+
+  for (let i = 0; i < gridSize; i++) {
     emptyGeneration[i] = [];
-    for (let j = 0; j < columns; j++) {
+    for (let j = 0; j < gridSize; j++) {
       emptyGeneration[i][j] = 0;
     }
   }
@@ -343,14 +342,17 @@ function handleTickSpeedSelection() {
 }
 
 function handleGridSizeSelection() {
-  const gridSize = document.querySelector('#grid-size').value;
-  setGridSize(parseInt(gridSize));
+  let gridSize = document.querySelector('#grid-size').value;
+  gridSize = parseInt(gridSize);
+  setGridSize(gridSize);
+  resizeCurrentGeneration(gridSize);
   render();
 }
 
 function initializeGridSize() {
   const gridSize = document.querySelector('#grid-size').value;
   setGridSize(parseInt(gridSize));
+  resizeCurrentGeneration(gridSize);
 }
 
 function getGridSize() {
@@ -444,6 +446,23 @@ function addRandomLife(generation) {
     generation[randomRow][randomColumn] = 1;
     return generation;
   }
+}
+
+function resizeCurrentGeneration(size) {
+  const currentGeneration = getCurrentGeneration();
+  const currentGenerationSize = currentGeneration.length;
+  const currentGenerationResized = [];
+  for (let i = 0; i < size; i++) {
+    currentGenerationResized[i] = [];
+    for (let j = 0; j < size; j++) {
+      if (i >= currentGenerationSize || j >= currentGenerationSize) {
+        currentGenerationResized[i][j] = 0;
+      } else {
+        currentGenerationResized[i][j] = currentGeneration[i][j];
+      }
+    }
+  }
+  setCurrentGeneration(currentGenerationResized);
 }
 
 initializeGame();
