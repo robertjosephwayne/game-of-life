@@ -132,9 +132,11 @@ function tick() {
 }
 
 function initializeGame() {
-  const initialGeneration = getEmptyGeneration();
   initializeGridSize();
+
+  const initialGeneration = getEmptyGeneration();
   setCurrentGeneration(initialGeneration);
+  
   initializeRandomLife();
   handleTickSpeedSelection();
   resetGenerationCount();
@@ -353,7 +355,6 @@ function initializeGridSize() {
   let gridSize = document.querySelector('#grid-size').value;
   gridSize = parseInt(gridSize);
   setGridSize(gridSize);
-  resizeCurrentGeneration(gridSize);
 }
 
 function getGridSize() {
@@ -463,6 +464,7 @@ function resizeCurrentGeneration(size) {
       }
     }
   }
+  console.log(currentGenerationResized);
   setCurrentGeneration(currentGenerationResized);
 }
 
