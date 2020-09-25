@@ -350,8 +350,9 @@ function handleGridSizeSelection() {
 }
 
 function initializeGridSize() {
-  const gridSize = document.querySelector('#grid-size').value;
-  setGridSize(parseInt(gridSize));
+  let gridSize = document.querySelector('#grid-size').value;
+  gridSize = parseInt(gridSize);
+  setGridSize(gridSize);
   resizeCurrentGeneration(gridSize);
 }
 
