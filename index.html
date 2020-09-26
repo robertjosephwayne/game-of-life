@@ -1,59 +1,77 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Game of Life</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Game of Life</h1>
+    <header>
+      <h1>Game of Life</h1>
+    </header>
+    
     <div id="game-display"></div>
+
     <div id="game-config">
-      <button id="start">
-        <i class="material-icons">play_arrow</i>
-      </button>
-      <button id="stop">
-        <i class="material-icons">pause</i>
-      </button>
-      <button id="tick">
-        <i class="material-icons">skip_next</i>
-      </button>
-      <button id="reset">
-        <i class="material-icons">refresh</i>
-      </button>
-      <select name="patterns" id="patterns">
-        <option value="empty">Empty</option>
-        <option value="glider">Glider</option>
-        <option value="small-exploder">Small Exploder</option>"
-        <option value="exploder">Exploder</option>
-        <option value="ten-cell-row">Ten Cell Row</option>
-        <option value="lightweight-spaceship">Lightweight Spaceship</option>
-        <option value="block">Block</option>
-        <option value="tub">Tub</option>
-        <option value="boat">Boat</option>
-      </select>
+      
+      <div id="game-config-buttons">
+        <button id="start">
+          <i class="material-icons">play_arrow</i>
+        </button>
+        <button id="stop">
+          <i class="material-icons">pause</i>
+        </button>
+        <button id="tick">
+          <i class="material-icons">skip_next</i>
+        </button>
+        <button id="reset">
+          <i class="material-icons">refresh</i>
+        </button>
+      </div>
+
+      <div id="game-config-patterns">
+        Preset Patterns: 
+        <select name="patterns" id="patterns">
+          <option value="empty">Empty</option>
+          <option value="glider">Glider</option>
+          <option value="small-exploder">Small Exploder</option>
+          <option value="exploder">Exploder</option>
+          <option value="ten-cell-row">Ten Cell Row</option>
+          <option value="lightweight-spaceship">Lightweight Spaceship</option>
+          <option value="block">Block</option>
+          <option value="tub">Tub</option>
+          <option value="boat">Boat</option>
+        </select>
+      </div>
+
+      <div class="game-config-range">
+        <label for="tick-speed">Tick Speed: </label>
+        <input type="range" id="tick-speed" min="0" max="1000" />
+      </div>
+
+      <div class="game-config-range">
+        <label for="grid-size">Grid Size: </label>
+        <input type="range" id="grid-size" min="25" max="50" />
+      </div>
+
+      <div>
+        <label for="random-life">Generate Random Cells: </label>
+        <input
+          type="checkbox"
+          id="random-life"
+          name="random-life"
+        />
+      </div>
+
+      <div>
+        Generation Count: <span id="generation-count">0</div>
+      </div>
     </div>
-    <div>
-      <label for="tick-speed">Tick Speed:</label>
-      <input type="range" id="tick-speed" min="0" max="1000">
-    </div>
-    <div>
-      <label for="grid-size">Grid Size:</label>
-      <input type="range" id="grid-size" min="25" max="50">
-    </div>
-    <div id="game-status"></div>
-    <div>
-      <fieldset>
-        <legend>Random Life:</legend>
-        <label for="random-life-on">On</label>
-        <input type="radio" id="random-life-on" name="random-life" value="active">
-        <label for="random-life-off">Off</label>
-        <input type="radio" id="random-life-off" name="random-life" value="inactive" checked>
-      </fieldset>
-    </div>
-    <div id="generation-count">0</div>
+
     <script src="app.js"></script>
   </body>
 </html>

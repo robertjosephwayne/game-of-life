@@ -422,8 +422,12 @@ function initializeRandomLife() {
 }
 
 function handleRandomLifeSelection(event) {
-  const randomLifeStatus = event.target.value;
-  setRandomLifeStatus(randomLifeStatus);
+  const randomLifeActive = event.target.checked;
+  if (randomLifeActive) {
+    setRandomLifeStatus('active');
+  } else {
+    setRandomLifeStatus('inactive');
+  }
 }
 
 function getRandomLifeStatus() {
@@ -491,9 +495,6 @@ tickSpeed.addEventListener('change', handleTickSpeedSelection);
 const gridSize = document.querySelector('#grid-size');
 gridSize.addEventListener('change', handleGridSizeSelection);
 
-const randomLifeOn = document.querySelector('#random-life-on');
-randomLifeOn.addEventListener('click', handleRandomLifeSelection);
-
-const randomLifeOff = document.querySelector('#random-life-off');
-randomLifeOff.addEventListener('click', handleRandomLifeSelection);
+const randomLife = document.querySelector('#random-life');
+randomLife.addEventListener('click', handleRandomLifeSelection);
 
