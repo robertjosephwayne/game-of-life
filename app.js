@@ -283,7 +283,7 @@ function getBoatPattern(startingRow = 8, startingColumn = 8) {
   return boatPattern;
 }
 
-function handleStart() {
+function startTicking() {
   const tickInterval = getTickInterval();
   const ticker = setInterval(tick, tickInterval);
   const startButton = document.querySelector('#start');
@@ -295,7 +295,7 @@ function handleStart() {
   setActivityStatus('active');
 }
 
-function handleStop() {
+function stopTicking() {
   setActivityStatus('inactive');
 }
 
@@ -340,7 +340,7 @@ function handleTickSpeedSelection() {
   setTickInterval(newTickInterval);
 
   const activityStatus = getActivityStatus();
-  if (activityStatus === 'active') handleStart();
+  if (activityStatus === 'active') startTicking();
 }
 
 function handleGridSizeSelection() {
@@ -478,10 +478,10 @@ const tickButton = document.querySelector('#tick');
 tickButton.addEventListener('click', tick);
 
 const startButton = document.querySelector('#start');
-startButton.addEventListener('click', handleStart);
+startButton.addEventListener('click', startTicking);
 
 const stopButton = document.querySelector('#stop');
-stopButton.addEventListener('click', handleStop);
+stopButton.addEventListener('click', stopTicking);
 
 const resetButton = document.querySelector('#reset');
 resetButton.addEventListener('click', handleReset);
