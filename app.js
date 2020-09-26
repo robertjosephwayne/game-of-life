@@ -119,15 +119,26 @@ function render() {
   gameDisplay.appendChild(gameCells);
 
   renderGenerationCount();
+  renderLiveCellCount();
 }
 
 // Get the next generation of cells
 // Update the current generation to the next generation
 // Render the next generation to the page
 function tick() {
+  console.log('tick');
   const nextGeneration = getNextGeneration();
   setCurrentGeneration(nextGeneration);
   incrementGenerationCount();
+  
+  const liveCells = countLiveCells(nextGeneration);
+  setLiveCellCount(liveCells);
+
+  if (liveCells === 0) {
+    const stopButton = document.querySelector('#stop');
+    stopButton.click();
+  }
+  
   render();
 }
 
@@ -136,7 +147,7 @@ function initializeGame() {
 
   const initialGeneration = getEmptyGeneration();
   setCurrentGeneration(initialGeneration);
-  
+  initializeLiveCellCount();
   initializeRandomLife();
   handleTickSpeedSelection();
   resetGenerationCount();
@@ -312,6 +323,9 @@ function handleCellClick(event) {
   }
 
   setCurrentGeneration(currentGeneration);
+
+  const liveCells = countLiveCells(currentGeneration);
+  setLiveCellCount(liveCells);
   render();
 }
 
@@ -385,10 +399,26 @@ function setCurrentGenerationCount(newCount) {
 }
 
 function renderGenerationCount() {
-  const localStorage = window.localStorage;
   const currentGenerationCount = getCurrentGenerationCount();
   const generationCountContainer = document.querySelector('#generation-count');
   generationCountContainer.innerText = currentGenerationCount;
+}
+
+function renderLiveCellCount() {
+  const liveCellCount = getLiveCellCount();
+  const liveCellCountContainer = document.querySelector('#live-cell-count');
+  liveCellCountContainer.innerText = liveCellCount;
+}
+
+function getLiveCellCount() {
+  const localStorage = window.localStorage;
+  const liveCellCount = localStorage.getItem('liveCellCount');
+  return parseInt(liveCellCount);
+}
+
+function setLiveCellCount(newCount) {
+  const localStorage = window.localStorage;
+  localStorage.setItem('liveCellCount', newCount);
 }
 
 function resetGenerationCount() {
@@ -419,6 +449,11 @@ function setActivityStatus(status) {
 function initializeRandomLife() {
   const localStorage = window.localStorage;
   localStorage.setItem('randomLifeStatus', 'inactive');
+}
+
+function initializeLiveCellCount() {
+  const localStorage = window.localStorage;
+  localStorage.setItem('liveCellCount', 0);
 }
 
 function handleRandomLifeSelection(event) {
@@ -468,8 +503,21 @@ function resizeCurrentGeneration(size) {
       }
     }
   }
-  console.log(currentGenerationResized);
   setCurrentGeneration(currentGenerationResized);
+}
+
+function countLiveCells(generation) {
+  const rows = generation.length;
+  const columns = generation[0].length;
+  let liveCells = 0;
+  
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+      liveCells += generation[i][j];
+    }
+  }
+
+  return liveCells;
 }
 
 initializeGame();
