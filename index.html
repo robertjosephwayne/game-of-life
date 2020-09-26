@@ -1,14 +1,18 @@
 <!DOCTYPE html>
+
 <html>
-  <head>
+  
+<head>
     <meta charset="UTF-8" />
     <title>Game of Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <header>
       <h1>Game of Life</h1>
@@ -17,7 +21,7 @@
     <div id="game-display"></div>
 
     <div id="game-config">
-      
+
       <div id="game-config-buttons">
         <button id="start">
           <i class="material-icons">play_arrow</i>
@@ -60,18 +64,18 @@
 
       <div>
         <label for="random-life">Generate Random Cells: </label>
-        <input
-          type="checkbox"
-          id="random-life"
-          name="random-life"
+        <input type="checkbox" id="random-life" name="random-life"
         />
       </div>
 
       <div>
         Generation Count: <span id="generation-count">0</div>
       </div>
-    </div>
 
+    </div>
+    
     <script src="app.js"></script>
+  
   </body>
+
 </html>
