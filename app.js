@@ -1,5 +1,64 @@
 "use strict"
 
+// General game
+
+function initializeGame() {
+  initializeGridSize();
+  
+  const initialGeneration = getEmptyGeneration();
+  setCurrentGeneration(initialGeneration);
+  
+  initializeLiveCellCount();
+  initializeRandomLife();
+  updateTickSpeed();
+  resetGenerationCount();
+  renderGame();
+}
+
+function resetGame() {
+  const patternList = document.querySelector('#patterns');
+  const activePattern = patternList.value;
+  const initialGeneration = getPattern(activePattern);
+  setCurrentGeneration(initialGeneration);
+  resetGenerationCount();
+  renderGame();
+}
+
+// Updates the page to display the next generation
+function renderGame() {
+  const currentGeneration = getCurrentGeneration();
+  const gridSize = getGridSize();
+  const rows = gridSize;
+  const columns = gridSize;
+  const gameCells = document.createElement('table');
+  gameCells.id = 'game-board';
+  gameCells.addEventListener('click', handleCellClick);
+
+  for (let i = 0; i < rows; i++) {
+    const currentRow = document.createElement('tr');
+    for (let j = 0; j < columns; j++) {
+      const cell = document.createElement('td')
+      cell.setAttribute("data-row", i);
+      cell.setAttribute("data-column", j);
+      if (currentGeneration[i][j]) {
+        cell.className = 'alive';
+      } else {
+        cell.className = 'dead';
+      }
+      currentRow.appendChild(cell);
+    }
+
+    gameCells.appendChild(currentRow);
+  }
+
+  const gameDisplay = document.querySelector('#game-display');
+  gameDisplay.innerHTML = '';
+  gameDisplay.appendChild(gameCells);
+
+  renderGenerationCount();
+  renderLiveCellCount();
+}
+
 // Current generation
 
 // Retrieve and return an array containing the current generation of cells
@@ -108,67 +167,9 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
   return liveNeighbors;
 }
 
-// General game
-
-function initializeGame() {
-  initializeGridSize();
-
-  const initialGeneration = getEmptyGeneration();
-  setCurrentGeneration(initialGeneration);
-  initializeLiveCellCount();
-  initializeRandomLife();
-  handleTickSpeedSelection();
-  resetGenerationCount();
-  renderGame();
-}
-
-function resetGame() {
-  const patternList = document.querySelector('#patterns');
-  const activePattern = patternList.value;
-  const initialGeneration = getPattern(activePattern);
-  setCurrentGeneration(initialGeneration);
-  resetGenerationCount();
-  renderGame();
-}
-
-// Updates the page to display the next generation
-function renderGame() {
-  const currentGeneration = getCurrentGeneration();
-  const gridSize = getGridSize();
-  const rows = gridSize;
-  const columns = gridSize;
-  const gameCells = document.createElement('table');
-  gameCells.id = 'game-board';
-  gameCells.addEventListener('click', handleCellClick);
-
-  for (let i = 0; i < rows; i++) {
-    const currentRow = document.createElement('tr');
-    for (let j = 0; j < columns; j++) {
-      const cell = document.createElement('td')
-      cell.setAttribute("data-row", i);
-      cell.setAttribute("data-column", j);
-      if (currentGeneration[i][j]) {
-        cell.className = 'alive';
-      } else {
-        cell.className = 'dead';
-      }
-      currentRow.appendChild(cell);
-    }
-
-    gameCells.appendChild(currentRow);
-  }
-
-  const gameDisplay = document.querySelector('#game-display');
-  gameDisplay.innerHTML = '';
-  gameDisplay.appendChild(gameCells);
-
-  renderGenerationCount();
-  renderLiveCellCount();
-}
-
 // Tick
 
-function handleTickSpeedSelection() {
+function updateTickSpeed() {
   const localStorage = window.localStorage;
   const tickSpeed = document.querySelector('#tick-speed');
   const rangeMax = tickSpeed.getAttribute('max');
@@ -558,7 +559,7 @@ const patterns = document.querySelector('#patterns');
 patterns.addEventListener('change', handlePatternSelection);
 
 const tickSpeed = document.querySelector('#tick-speed');
-tickSpeed.addEventListener('change', handleTickSpeedSelection);
+tickSpeed.addEventListener('change', updateTickSpeed);
 
 const gridSize = document.querySelector('#grid-size');
 gridSize.addEventListener('change', handleGridSizeSelection);
