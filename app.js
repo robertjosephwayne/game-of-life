@@ -53,7 +53,7 @@ function handleCellClick(event) {
 // This section contains functions related to the current generation of cells.
 
 /**
- * Retrieves and returns the current generation.
+ * Retrieves the current generation from local storage.
  * @return {Array} - The current generation of cells.
  */
 function getCurrentGeneration() {
@@ -63,7 +63,7 @@ function getCurrentGeneration() {
 }
 
 /**
- * Updates the current generation of cells to the next generation.
+ * Updates the current generation in local storage to the next generation.
  * @param {Array} nextGeneration - The next generation of cells.
  */
 function setCurrentGeneration(nextGeneration) {
