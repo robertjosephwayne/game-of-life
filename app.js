@@ -9,6 +9,13 @@ function getCurrentGeneration() {
   return JSON.parse(currentGenerationJSON);
 }
 
+// Updates the variable containing the current generation of cells to the next generation
+function setCurrentGeneration(nextGeneration) {
+  const localStorage = window.localStorage;
+  const nextGenerationJSON = JSON.stringify(nextGeneration);
+  localStorage.setItem('currentGeneration', nextGenerationJSON);
+}
+
 function resizeCurrentGeneration(size) {
   const currentGeneration = getCurrentGeneration();
   const currentGenerationSize = currentGeneration.length;
@@ -24,13 +31,6 @@ function resizeCurrentGeneration(size) {
     }
   }
   setCurrentGeneration(currentGenerationResized);
-}
-
-// Updates the variable containing the current generation of cells to the next generation
-function setCurrentGeneration(nextGeneration) {
-  const localStorage = window.localStorage;
-  const nextGenerationJSON = JSON.stringify(nextGeneration);
-  localStorage.setItem('currentGeneration', nextGenerationJSON);
 }
 
 // Next generation
@@ -110,7 +110,6 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
 
 // General game
 
-
 function initializeGame() {
   initializeGridSize();
 
@@ -119,6 +118,15 @@ function initializeGame() {
   initializeLiveCellCount();
   initializeRandomLife();
   handleTickSpeedSelection();
+  resetGenerationCount();
+  renderGame();
+}
+
+function resetGame() {
+  const patternList = document.querySelector('#patterns');
+  const activePattern = patternList.value;
+  const initialGeneration = getPattern(activePattern);
+  setCurrentGeneration(initialGeneration);
   resetGenerationCount();
   renderGame();
 }
@@ -158,6 +166,31 @@ function renderGame() {
   renderLiveCellCount();
 }
 
+// Tick
+
+function handleTickSpeedSelection() {
+  const localStorage = window.localStorage;
+  const tickSpeed = document.querySelector('#tick-speed');
+  const rangeMax = tickSpeed.getAttribute('max');
+  const rangeValue = tickSpeed.value;
+  const newTickInterval = rangeMax - rangeValue;
+  setTickInterval(newTickInterval);
+
+  const activityStatus = getActivityStatus();
+  if (activityStatus === 'active') startTicking();
+}
+
+function getTickInterval() {
+  const localStorage = window.localStorage;
+  const tickInterval = localStorage.getItem('tickInterval');
+  return parseInt(tickInterval);
+}
+
+function setTickInterval(newTickInterval) {
+  const localStorage = window.localStorage;
+  localStorage.setItem('tickInterval', newTickInterval);
+}
+
 // Get the next generation of cells
 // Update the current generation to the next generation
 // Render the next generation to the page
@@ -195,6 +228,13 @@ function stopTicking() {
 }
 
 // Preset patterns
+
+function handlePatternSelection(event) {
+  const patternName = event.target.value;
+  const pattern = getPattern(patternName);
+  setCurrentGeneration(pattern);
+  renderGame();
+}
 
 function getPattern(patternName) {
   let pattern = getEmptyGeneration();
@@ -355,33 +395,7 @@ function handleCellClick(event) {
   renderGame();
 }
 
-function resetGame() {
-  const patternList = document.querySelector('#patterns');
-  const activePattern = patternList.value;
-  const initialGeneration = getPattern(activePattern);
-  setCurrentGeneration(initialGeneration);
-  resetGenerationCount();
-  renderGame();
-}
-
-function handlePatternSelection(event) {
-  const patternName = event.target.value;
-  const pattern = getPattern(patternName);
-  setCurrentGeneration(pattern);
-  renderGame();
-}
-
-function handleTickSpeedSelection() {
-  const localStorage = window.localStorage;
-  const tickSpeed = document.querySelector('#tick-speed');
-  const rangeMax = tickSpeed.getAttribute('max');
-  const rangeValue = tickSpeed.value;
-  const newTickInterval = rangeMax - rangeValue;
-  setTickInterval(newTickInterval);
-
-  const activityStatus = getActivityStatus();
-  if (activityStatus === 'active') startTicking();
-}
+// Grid size
 
 function handleGridSizeSelection() {
   let gridSize = document.querySelector('#grid-size').value;
@@ -390,8 +404,6 @@ function handleGridSizeSelection() {
   resizeCurrentGeneration(gridSize);
   renderGame();
 }
-
-// Grid size
 
 function initializeGridSize() {
   let gridSize = document.querySelector('#grid-size').value;
@@ -476,19 +488,6 @@ function countLiveCells(generation) {
   return liveCells;
 }
 
-// Tick interval
-
-function getTickInterval() {
-  const localStorage = window.localStorage;
-  const tickInterval = localStorage.getItem('tickInterval');
-  return parseInt(tickInterval);
-}
-
-function setTickInterval(newTickInterval) {
-  const localStorage = window.localStorage;
-  localStorage.setItem('tickInterval', newTickInterval);
-}
-
 // Activity status
 
 function getActivityStatus() {
@@ -540,8 +539,6 @@ function addRandomLife(generation) {
     return generation;
   }
 }
-
-
 
 initializeGame();
 
