@@ -6,7 +6,6 @@
 function initializeGame() {
   initializeGridSize();
   resetCurrentGeneration();
-  updateLiveCellCount();
   initializeRandomLife();
   updateTickSpeed();
   resetGenerationCount();
@@ -68,6 +67,7 @@ function setCurrentGeneration(nextGeneration) {
   const localStorage = window.localStorage;
   const nextGenerationJSON = JSON.stringify(nextGeneration);
   localStorage.setItem('currentGeneration', nextGenerationJSON);
+  updateLiveCellCount();
 }
 
 function resetCurrentGeneration() {
