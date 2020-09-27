@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 
 <html>
-  
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Game of Life</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link href="style.css" rel="stylesheet" />
   </head>
 
   <body>
-    
     <header>
       <h1>Game of Life</h1>
     </header>
-    
-    <div id="game-container">
 
+    <div id="game-container">
       <div id="game-board">
         <table id="game-grid"></table>
       </div>
 
       <div id="game-config">
-
         <div id="game-config-buttons">
           <button id="start">
             <i class="material-icons">play_arrow</i>
@@ -43,7 +42,7 @@
         </div>
 
         <div id="game-config-patterns">
-          Preset Patterns: 
+          Preset Patterns:
           <select name="patterns" id="patterns">
             <option value="empty">Empty</option>
             <option value="glider">Glider</option>
@@ -69,23 +68,15 @@
 
         <div>
           <label for="random-life">Generate Random Cells: </label>
-          <input type="checkbox" id="random-life" name="random-life"/>
+          <input type="checkbox" id="random-life" name="random-life" />
         </div>
 
-        <div>
-          Generation Count: <span id="generation-count">0</span>
-        </div>
+        <div>Generation Count: <span id="generation-count">0</span></div>
 
-        <div>
-          Live Cell Count: <span id="live-cell-count">0</span>
-        </div>
-
+        <div>Live Cell Count: <span id="live-cell-count">0</span></div>
       </div>
-
     </div>
-    
-    <script src="app.js"></script>
-  
-  </body>
 
+    <script src="app.js"></script>
+  </body>
 </html>
