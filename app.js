@@ -2,10 +2,11 @@
 
 // General game
 
+// Initialize the game
 function initializeGame() {
   initializeGridSize();
-  initializeCurrentGeneration();
-  initializeLiveCellCount();
+  resetCurrentGeneration();
+  updateLiveCellCount();
   initializeRandomLife();
   updateTickSpeed();
   resetGenerationCount();
@@ -13,10 +14,7 @@ function initializeGame() {
 }
 
 function resetGame() {
-  const patternList = document.querySelector('#patterns');
-  const activePattern = patternList.value;
-  const initialGeneration = getPattern(activePattern);
-  setCurrentGeneration(initialGeneration);
+  resetCurrentGeneration();
   resetGenerationCount();
   renderGame();
 }
@@ -58,11 +56,6 @@ function renderGame() {
 
 // Current generation
 
-function initializeCurrentGeneration() {
-  const initialGeneration = getEmptyGeneration();
-  setCurrentGeneration(initialGeneration);
-}
-
 // Retrieve and return an array containing the current generation of cells
 function getCurrentGeneration() {
   const localStorage = window.localStorage;
@@ -75,6 +68,11 @@ function setCurrentGeneration(nextGeneration) {
   const localStorage = window.localStorage;
   const nextGenerationJSON = JSON.stringify(nextGeneration);
   localStorage.setItem('currentGeneration', nextGenerationJSON);
+}
+
+function resetCurrentGeneration() {
+  const initialGeneration = getActivePattern();
+  setCurrentGeneration(initialGeneration);
 }
 
 function resizeCurrentGeneration(size) {
@@ -274,6 +272,14 @@ function getPattern(patternName) {
   return pattern;
 }
 
+// Get the initial state of the pattern that is currently selected
+function getActivePattern() {
+  const patternList = document.querySelector('#patterns');
+  const activePatternSelection = patternList.value;
+  const activePattern = getPattern(activePatternSelection);
+  return activePattern;
+}
+
 function getEmptyGeneration() {
   const gridSize = getGridSize();
   const emptyGeneration = [];
@@ -455,11 +461,6 @@ function renderGenerationCount() {
 
 // Live cell count
 
-function initializeLiveCellCount() {
-  const localStorage = window.localStorage;
-  localStorage.setItem('liveCellCount', 0);
-}
-
 function getLiveCellCount() {
   const localStorage = window.localStorage;
   const liveCellCount = localStorage.getItem('liveCellCount');
@@ -469,6 +470,12 @@ function getLiveCellCount() {
 function setLiveCellCount(newCount) {
   const localStorage = window.localStorage;
   localStorage.setItem('liveCellCount', newCount);
+}
+
+function updateLiveCellCount() {
+  const currentGeneration = getCurrentGeneration();
+  const liveCellCount = countLiveCells(currentGeneration);
+  setLiveCellCount(liveCellCount);
 }
 
 function renderLiveCellCount() {
