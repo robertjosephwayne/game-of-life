@@ -108,6 +108,21 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
   return liveNeighbors;
 }
 
+// General game
+
+
+function initializeGame() {
+  initializeGridSize();
+
+  const initialGeneration = getEmptyGeneration();
+  setCurrentGeneration(initialGeneration);
+  initializeLiveCellCount();
+  initializeRandomLife();
+  handleTickSpeedSelection();
+  resetGenerationCount();
+  renderGame();
+}
+
 // Updates the page to display the next generation
 function renderGame() {
   const currentGeneration = getCurrentGeneration();
@@ -163,17 +178,23 @@ function tick() {
   renderGame();
 }
 
-function initializeGame() {
-  initializeGridSize();
-
-  const initialGeneration = getEmptyGeneration();
-  setCurrentGeneration(initialGeneration);
-  initializeLiveCellCount();
-  initializeRandomLife();
-  handleTickSpeedSelection();
-  resetGenerationCount();
-  renderGame();
+function startTicking() {
+  const tickInterval = getTickInterval();
+  const ticker = setInterval(tick, tickInterval);
+  const startButton = document.querySelector('#start');
+  const stopButton = document.querySelector('#stop');
+  const tickSpeed = document.querySelector('#tick-speed');
+  startButton.addEventListener('click', () => clearInterval(ticker));
+  stopButton.addEventListener('click', () => clearInterval(ticker));
+  tickSpeed.addEventListener('change', () => clearInterval(ticker));
+  setActivityStatus('active');
 }
+
+function stopTicking() {
+  setActivityStatus('inactive');
+}
+
+// Preset patterns
 
 function getPattern(patternName) {
   let pattern = getEmptyGeneration();
@@ -315,22 +336,6 @@ function getBoatPattern(startingRow = 8, startingColumn = 8) {
   return boatPattern;
 }
 
-function startTicking() {
-  const tickInterval = getTickInterval();
-  const ticker = setInterval(tick, tickInterval);
-  const startButton = document.querySelector('#start');
-  const stopButton = document.querySelector('#stop');
-  const tickSpeed = document.querySelector('#tick-speed');
-  startButton.addEventListener('click', () => clearInterval(ticker));
-  stopButton.addEventListener('click', () => clearInterval(ticker));
-  tickSpeed.addEventListener('change', () => clearInterval(ticker));
-  setActivityStatus('active');
-}
-
-function stopTicking() {
-  setActivityStatus('inactive');
-}
-
 function handleCellClick(event) {
   const cellRow = event.target.dataset.row;
   const cellColumn = event.target.dataset.column;
@@ -350,7 +355,7 @@ function handleCellClick(event) {
   renderGame();
 }
 
-function handleReset() {
+function resetGame() {
   const patternList = document.querySelector('#patterns');
   const activePattern = patternList.value;
   const initialGeneration = getPattern(activePattern);
@@ -423,6 +428,10 @@ function setCurrentGenerationCount(newCount) {
   localStorage.setItem('currentGenerationCount', newCount);
 }
 
+function resetGenerationCount() {
+  setCurrentGenerationCount(0);
+}
+
 function renderGenerationCount() {
   const currentGenerationCount = getCurrentGenerationCount();
   const generationCountContainer = document.querySelector('#generation-count');
@@ -436,12 +445,6 @@ function initializeLiveCellCount() {
   localStorage.setItem('liveCellCount', 0);
 }
 
-function renderLiveCellCount() {
-  const liveCellCount = getLiveCellCount();
-  const liveCellCountContainer = document.querySelector('#live-cell-count');
-  liveCellCountContainer.innerText = liveCellCount;
-}
-
 function getLiveCellCount() {
   const localStorage = window.localStorage;
   const liveCellCount = localStorage.getItem('liveCellCount');
@@ -453,8 +456,24 @@ function setLiveCellCount(newCount) {
   localStorage.setItem('liveCellCount', newCount);
 }
 
-function resetGenerationCount() {
-  setCurrentGenerationCount(0);
+function renderLiveCellCount() {
+  const liveCellCount = getLiveCellCount();
+  const liveCellCountContainer = document.querySelector('#live-cell-count');
+  liveCellCountContainer.innerText = liveCellCount;
+}
+
+function countLiveCells(generation) {
+  const rows = generation.length;
+  const columns = generation[0].length;
+  let liveCells = 0;
+  
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+      liveCells += generation[i][j];
+    }
+  }
+
+  return liveCells;
 }
 
 // Tick interval
@@ -489,15 +508,6 @@ function initializeRandomLife() {
   localStorage.setItem('randomLifeStatus', 'inactive');
 }
 
-function handleRandomLifeSelection(event) {
-  const randomLifeActive = event.target.checked;
-  if (randomLifeActive) {
-    setRandomLifeStatus('active');
-  } else {
-    setRandomLifeStatus('inactive');
-  }
-}
-
 function getRandomLifeStatus() {
   const localStorage = window.localStorage;
   const randomLifeStatus = localStorage.getItem('randomLifeStatus');
@@ -507,6 +517,15 @@ function getRandomLifeStatus() {
 function setRandomLifeStatus(status) {
   const localStorage = window.localStorage;
   localStorage.setItem('randomLifeStatus', status);
+}
+
+function handleRandomLifeSelection(event) {
+  const randomLifeActive = event.target.checked;
+  if (randomLifeActive) {
+    setRandomLifeStatus('active');
+  } else {
+    setRandomLifeStatus('inactive');
+  }
 }
 
 function addRandomLife(generation) {
@@ -522,19 +541,7 @@ function addRandomLife(generation) {
   }
 }
 
-function countLiveCells(generation) {
-  const rows = generation.length;
-  const columns = generation[0].length;
-  let liveCells = 0;
-  
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < columns; j++) {
-      liveCells += generation[i][j];
-    }
-  }
 
-  return liveCells;
-}
 
 initializeGame();
 
@@ -548,7 +555,7 @@ const stopButton = document.querySelector('#stop');
 stopButton.addEventListener('click', stopTicking);
 
 const resetButton = document.querySelector('#reset');
-resetButton.addEventListener('click', handleReset);
+resetButton.addEventListener('click', resetGame);
 
 const patterns = document.querySelector('#patterns');
 patterns.addEventListener('change', handlePatternSelection);
