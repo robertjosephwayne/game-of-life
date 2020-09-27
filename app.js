@@ -106,9 +106,9 @@ function renderCurrentGeneration() {
   const gridSize = getGridSize();
   const rows = gridSize;
   const columns = gridSize;
-  const gameCells = document.createElement('table');
-  gameCells.id = 'game-board';
-  gameCells.addEventListener('click', handleCellClick);
+  const gameBoard = document.createElement('table');
+  gameBoard.id = 'game-board';
+  gameBoard.addEventListener('click', handleCellClick);
 
   for (let i = 0; i < rows; i++) {
     const currentRow = document.createElement('tr');
@@ -124,12 +124,12 @@ function renderCurrentGeneration() {
       currentRow.appendChild(cell);
     }
 
-    gameCells.appendChild(currentRow);
+    gameBoard.appendChild(currentRow);
   }
 
   const gameDisplay = document.querySelector('#game-display');
   gameDisplay.innerHTML = '';
-  gameDisplay.appendChild(gameCells);
+  gameDisplay.appendChild(gameBoard);
 }
 
 // This section contains functions related to the next generation of cells.
