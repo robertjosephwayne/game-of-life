@@ -119,7 +119,6 @@ function renderCurrentGeneration() {
       if (currentGeneration[i][j]) cell.className = 'alive';
       currentRow.appendChild(cell);
     }
-
     newGameGrid.appendChild(currentRow);
   }
 
@@ -288,227 +287,6 @@ function startTicking() {
  */
 function stopTicking() {
   setActivityStatus('inactive');
-}
-
-// This section contains functions related to the predefined patterns.
-
-/**
- * Sets the current generation to the selected pattern
- * and renders the pattern.
- * @param {Event} event - Selection of pattern.
- */
-function handlePatternSelection(event) {
-  console.log(event);
-  const patternName = event.target.value;
-  const pattern = getPattern(patternName);
-  setCurrentGeneration(pattern);
-  renderGame();
-}
-
-/**
- * @param {string} patternName - The name of a pattern.
- * @return {Array} - The initial state of the specified pattern.
- */
-function getPattern(patternName) {
-  let pattern = getEmptyGeneration();
-
-  switch (patternName) {
-    case 'glider':
-      pattern = getGliderPattern();
-      break;
-    case 'small-exploder':
-      pattern = getSmallExploderPattern();
-      break;
-    case 'exploder':
-      pattern = getExploderPattern();
-      break;
-    case 'ten-cell-row':
-      pattern = getTenCellRowPattern();
-      break;
-    case 'lightweight-spaceship':
-      pattern = getLightweightSpaceshipPattern();
-      break;
-    case 'block':
-      pattern = getBlockPattern();
-      break;
-    case 'tub':
-      pattern = getTubPattern();
-      break;
-    case 'boat':
-      pattern = getBoatPattern();
-      break;
-    default:
-      break;
-  }
-
-  return pattern;
-}
-
-/**
- * @return {Array} - The initial state of the currently selected pattern.
- */
-function getActivePattern() {
-  const patternList = document.querySelector('#patterns');
-  const activePatternSelection = patternList.value;
-  const activePattern = getPattern(activePatternSelection);
-  return activePattern;
-}
-
-/**
- * Creates an empty generation using the current grid size.
- * @return {Array} - An empty generation.
- */
-function getEmptyGeneration() {
-  const gridSize = getGridSize();
-  const emptyGeneration = [];
-
-  for (let i = 0; i < gridSize; i++) {
-    emptyGeneration[i] = [];
-    for (let j = 0; j < gridSize; j++) {
-      emptyGeneration[i][j] = 0;
-    }
-  }
-
-  return emptyGeneration;
-}
-
-/**
- * Creates and returns a glider pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - A glider pattern.
- */
-function getGliderPattern(startingRow = 8, startingColumn = 8) {
-  const gliderPattern = getEmptyGeneration();
-  gliderPattern[startingRow][startingColumn + 1] = 1;
-  gliderPattern[startingRow + 1][startingColumn + 2] = 1;
-  gliderPattern[startingRow + 2][startingColumn] = 1;
-  gliderPattern[startingRow + 2][startingColumn + 1] = 1;
-  gliderPattern[startingRow + 2][startingColumn + 2] = 1;
-  return gliderPattern;
-}
-
-/**
- * Creates and returns a small exploder pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - A small exploder pattern.
- */
-function getSmallExploderPattern(startingRow = 7, startingColumn = 9) {
-  const smallExploderPattern = getEmptyGeneration();
-  smallExploderPattern[startingRow][startingColumn + 1] = 1;
-  smallExploderPattern[startingRow + 1][startingColumn] = 1;
-  smallExploderPattern[startingRow + 1][startingColumn + 1] = 1;
-  smallExploderPattern[startingRow + 1][startingColumn + 2] = 1;
-  smallExploderPattern[startingRow + 2][startingColumn] = 1;
-  smallExploderPattern[startingRow + 2][startingColumn + 2] = 1;
-  smallExploderPattern[startingRow + 3][startingColumn + 1] = 1;
-  return smallExploderPattern;
-}
-
-/**
- * Creates and returns an exploder pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - An exploder pattern.
- */
-function getExploderPattern(startingRow = 8, startingColumn = 8) {
-  const exploderPattern = getEmptyGeneration();
-  exploderPattern[startingRow][startingColumn] = 1;
-  exploderPattern[startingRow][startingColumn + 2] = 1;
-  exploderPattern[startingRow][startingColumn + 4] = 1;
-  exploderPattern[startingRow + 1][startingColumn] = 1;
-  exploderPattern[startingRow + 1][startingColumn + 4] = 1;
-  exploderPattern[startingRow + 2][startingColumn] = 1;
-  exploderPattern[startingRow + 2][startingColumn + 4] = 1;
-  exploderPattern[startingRow + 3][startingColumn] = 1;
-  exploderPattern[startingRow + 3][startingColumn + 4] = 1;
-  exploderPattern[startingRow + 4][startingColumn] = 1;
-  exploderPattern[startingRow + 4][startingColumn + 2] = 1;
-  exploderPattern[startingRow + 4][startingColumn + 4] = 1;
-  return exploderPattern;
-}
-
-/**
- * Creates and returns a ten cell row pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - A ten cell row pattern.
- */
-function getTenCellRowPattern(startingRow = 9, startingColumn = 5) {
-  const tenCellRowPattern = getEmptyGeneration();
-  const endingColumn = startingColumn + 10;
-  for (let i = startingColumn; i < endingColumn; i++) {
-    tenCellRowPattern[startingRow][i] = 1;
-  }
-
-  return tenCellRowPattern;
-}
-
-/**
- * Creates and returns a lightweight spaceship pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - A lightweight spaceship pattern.
- */
-function getLightweightSpaceshipPattern(startingRow = 8, startingColumn = 8) {
-  const lightweightSpaceshipPattern = getEmptyGeneration();
-  lightweightSpaceshipPattern[startingRow][startingColumn + 1] = 1;
-  lightweightSpaceshipPattern[startingRow][startingColumn + 2] = 1;
-  lightweightSpaceshipPattern[startingRow][startingColumn + 3] = 1;
-  lightweightSpaceshipPattern[startingRow][startingColumn + 4] = 1;
-  lightweightSpaceshipPattern[startingRow + 1][startingColumn] = 1;
-  lightweightSpaceshipPattern[startingRow + 1][startingColumn + 4] = 1;
-  lightweightSpaceshipPattern[startingRow + 2][startingColumn + 4] = 1;
-  lightweightSpaceshipPattern[startingRow + 3][startingColumn] = 1;
-  lightweightSpaceshipPattern[startingRow + 3][startingColumn + 3] = 1;
-  return lightweightSpaceshipPattern;
-}
-
-/**
- * Creates and returns a block pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - A block pattern.
- */
-function getBlockPattern(startingRow = 9, startingColumn = 9) {
-  const blockPattern = getEmptyGeneration();
-  blockPattern[startingRow][startingColumn] = 1;
-  blockPattern[startingRow][startingColumn + 1] = 1;
-  blockPattern[startingRow + 1][startingColumn] = 1;
-  blockPattern[startingRow + 1][startingColumn + 1] = 1;
-  return blockPattern;
-}
-
-/**
- * Creates and returns a tub pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - A tub pattern.
- */
-function getTubPattern(startingRow = 8, startingColumn = 8) {
-  const tubPattern = getEmptyGeneration();
-  tubPattern[startingRow][startingColumn + 1] = 1;
-  tubPattern[startingRow + 1][startingColumn] = 1;
-  tubPattern[startingRow + 1][startingColumn + 2] = 1;
-  tubPattern[startingRow + 2][startingColumn + 1] = 1;
-  return tubPattern;
-}
-
-/**
- * Creates and returns a boat pattern.
- * @param {number} startingRow - An optional starting row for the pattern.
- * @param {number} startingColumn - An optional starting column for the pattern.
- * @return {Array} - A boat pattern.
- */
-function getBoatPattern(startingRow = 8, startingColumn = 8) {
-  const boatPattern = getEmptyGeneration();
-  boatPattern[startingRow][startingColumn + 1] = 1;
-  boatPattern[startingRow + 1][startingColumn] = 1;
-  boatPattern[startingRow + 1][startingColumn + 2] = 1;
-  boatPattern[startingRow + 2][startingColumn + 1] = 1;
-  boatPattern[startingRow + 2][startingColumn + 2] = 1;
-  return boatPattern;
 }
 
 // This section contains functions related to the grid size.
@@ -738,6 +516,227 @@ function addRandomLife(generation) {
     generation[randomRow][randomColumn] = 1;
     return generation;
   }
+}
+
+// This section contains functions related to the predefined patterns.
+
+/**
+ * Sets the current generation to the selected pattern
+ * and renders the pattern.
+ * @param {Event} event - Selection of pattern.
+ */
+function handlePatternSelection(event) {
+  console.log(event);
+  const patternName = event.target.value;
+  const pattern = getPattern(patternName);
+  setCurrentGeneration(pattern);
+  renderGame();
+}
+
+/**
+ * @param {string} patternName - The name of a pattern.
+ * @return {Array} - The initial state of the specified pattern.
+ */
+function getPattern(patternName) {
+  let pattern = getEmptyGeneration();
+
+  switch (patternName) {
+    case 'glider':
+      pattern = getGliderPattern();
+      break;
+    case 'small-exploder':
+      pattern = getSmallExploderPattern();
+      break;
+    case 'exploder':
+      pattern = getExploderPattern();
+      break;
+    case 'ten-cell-row':
+      pattern = getTenCellRowPattern();
+      break;
+    case 'lightweight-spaceship':
+      pattern = getLightweightSpaceshipPattern();
+      break;
+    case 'block':
+      pattern = getBlockPattern();
+      break;
+    case 'tub':
+      pattern = getTubPattern();
+      break;
+    case 'boat':
+      pattern = getBoatPattern();
+      break;
+    default:
+      break;
+  }
+
+  return pattern;
+}
+
+/**
+ * @return {Array} - The initial state of the currently selected pattern.
+ */
+function getActivePattern() {
+  const patternList = document.querySelector('#patterns');
+  const activePatternSelection = patternList.value;
+  const activePattern = getPattern(activePatternSelection);
+  return activePattern;
+}
+
+/**
+ * Creates an empty generation using the current grid size.
+ * @return {Array} - An empty generation.
+ */
+function getEmptyGeneration() {
+  const gridSize = getGridSize();
+  const emptyGeneration = [];
+
+  for (let i = 0; i < gridSize; i++) {
+    emptyGeneration[i] = [];
+    for (let j = 0; j < gridSize; j++) {
+      emptyGeneration[i][j] = 0;
+    }
+  }
+
+  return emptyGeneration;
+}
+
+/**
+ * Creates and returns a glider pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - A glider pattern.
+ */
+function getGliderPattern(startingRow = 8, startingColumn = 8) {
+  const gliderPattern = getEmptyGeneration();
+  gliderPattern[startingRow][startingColumn + 1] = 1;
+  gliderPattern[startingRow + 1][startingColumn + 2] = 1;
+  gliderPattern[startingRow + 2][startingColumn] = 1;
+  gliderPattern[startingRow + 2][startingColumn + 1] = 1;
+  gliderPattern[startingRow + 2][startingColumn + 2] = 1;
+  return gliderPattern;
+}
+
+/**
+ * Creates and returns a small exploder pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - A small exploder pattern.
+ */
+function getSmallExploderPattern(startingRow = 7, startingColumn = 9) {
+  const smallExploderPattern = getEmptyGeneration();
+  smallExploderPattern[startingRow][startingColumn + 1] = 1;
+  smallExploderPattern[startingRow + 1][startingColumn] = 1;
+  smallExploderPattern[startingRow + 1][startingColumn + 1] = 1;
+  smallExploderPattern[startingRow + 1][startingColumn + 2] = 1;
+  smallExploderPattern[startingRow + 2][startingColumn] = 1;
+  smallExploderPattern[startingRow + 2][startingColumn + 2] = 1;
+  smallExploderPattern[startingRow + 3][startingColumn + 1] = 1;
+  return smallExploderPattern;
+}
+
+/**
+ * Creates and returns an exploder pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - An exploder pattern.
+ */
+function getExploderPattern(startingRow = 8, startingColumn = 8) {
+  const exploderPattern = getEmptyGeneration();
+  exploderPattern[startingRow][startingColumn] = 1;
+  exploderPattern[startingRow][startingColumn + 2] = 1;
+  exploderPattern[startingRow][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 1][startingColumn] = 1;
+  exploderPattern[startingRow + 1][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 2][startingColumn] = 1;
+  exploderPattern[startingRow + 2][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 3][startingColumn] = 1;
+  exploderPattern[startingRow + 3][startingColumn + 4] = 1;
+  exploderPattern[startingRow + 4][startingColumn] = 1;
+  exploderPattern[startingRow + 4][startingColumn + 2] = 1;
+  exploderPattern[startingRow + 4][startingColumn + 4] = 1;
+  return exploderPattern;
+}
+
+/**
+ * Creates and returns a ten cell row pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - A ten cell row pattern.
+ */
+function getTenCellRowPattern(startingRow = 9, startingColumn = 5) {
+  const tenCellRowPattern = getEmptyGeneration();
+  const endingColumn = startingColumn + 10;
+  for (let i = startingColumn; i < endingColumn; i++) {
+    tenCellRowPattern[startingRow][i] = 1;
+  }
+
+  return tenCellRowPattern;
+}
+
+/**
+ * Creates and returns a lightweight spaceship pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - A lightweight spaceship pattern.
+ */
+function getLightweightSpaceshipPattern(startingRow = 8, startingColumn = 8) {
+  const lightweightSpaceshipPattern = getEmptyGeneration();
+  lightweightSpaceshipPattern[startingRow][startingColumn + 1] = 1;
+  lightweightSpaceshipPattern[startingRow][startingColumn + 2] = 1;
+  lightweightSpaceshipPattern[startingRow][startingColumn + 3] = 1;
+  lightweightSpaceshipPattern[startingRow][startingColumn + 4] = 1;
+  lightweightSpaceshipPattern[startingRow + 1][startingColumn] = 1;
+  lightweightSpaceshipPattern[startingRow + 1][startingColumn + 4] = 1;
+  lightweightSpaceshipPattern[startingRow + 2][startingColumn + 4] = 1;
+  lightweightSpaceshipPattern[startingRow + 3][startingColumn] = 1;
+  lightweightSpaceshipPattern[startingRow + 3][startingColumn + 3] = 1;
+  return lightweightSpaceshipPattern;
+}
+
+/**
+ * Creates and returns a block pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - A block pattern.
+ */
+function getBlockPattern(startingRow = 9, startingColumn = 9) {
+  const blockPattern = getEmptyGeneration();
+  blockPattern[startingRow][startingColumn] = 1;
+  blockPattern[startingRow][startingColumn + 1] = 1;
+  blockPattern[startingRow + 1][startingColumn] = 1;
+  blockPattern[startingRow + 1][startingColumn + 1] = 1;
+  return blockPattern;
+}
+
+/**
+ * Creates and returns a tub pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - A tub pattern.
+ */
+function getTubPattern(startingRow = 8, startingColumn = 8) {
+  const tubPattern = getEmptyGeneration();
+  tubPattern[startingRow][startingColumn + 1] = 1;
+  tubPattern[startingRow + 1][startingColumn] = 1;
+  tubPattern[startingRow + 1][startingColumn + 2] = 1;
+  tubPattern[startingRow + 2][startingColumn + 1] = 1;
+  return tubPattern;
+}
+
+/**
+ * Creates and returns a boat pattern.
+ * @param {number} startingRow - An optional starting row for the pattern.
+ * @param {number} startingColumn - An optional starting column for the pattern.
+ * @return {Array} - A boat pattern.
+ */
+function getBoatPattern(startingRow = 8, startingColumn = 8) {
+  const boatPattern = getEmptyGeneration();
+  boatPattern[startingRow][startingColumn + 1] = 1;
+  boatPattern[startingRow + 1][startingColumn] = 1;
+  boatPattern[startingRow + 1][startingColumn + 2] = 1;
+  boatPattern[startingRow + 2][startingColumn + 1] = 1;
+  boatPattern[startingRow + 2][startingColumn + 2] = 1;
+  return boatPattern;
 }
 
 // The user can click this button to manually trigger a tick.
