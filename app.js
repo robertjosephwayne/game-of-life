@@ -4,10 +4,7 @@
 
 function initializeGame() {
   initializeGridSize();
-  
-  const initialGeneration = getEmptyGeneration();
-  setCurrentGeneration(initialGeneration);
-  
+  initializeCurrentGeneration();
   initializeLiveCellCount();
   initializeRandomLife();
   updateTickSpeed();
@@ -60,6 +57,11 @@ function renderGame() {
 }
 
 // Current generation
+
+function initializeCurrentGeneration() {
+  const initialGeneration = getEmptyGeneration();
+  setCurrentGeneration(initialGeneration);
+}
 
 // Retrieve and return an array containing the current generation of cells
 function getCurrentGeneration() {
