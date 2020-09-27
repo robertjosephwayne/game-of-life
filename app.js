@@ -106,9 +106,9 @@ function renderCurrentGeneration() {
   const gridSize = getGridSize();
   const rows = gridSize;
   const columns = gridSize;
-  const gameBoard = document.createElement('table');
-  gameBoard.id = 'game-board';
-  gameBoard.addEventListener('click', handleCellClick);
+  const newGameGrid = document.createElement('table');
+  newGameGrid.id = 'game-grid';
+  newGameGrid.addEventListener('click', handleCellClick);
 
   for (let i = 0; i < rows; i++) {
     const currentRow = document.createElement('tr');
@@ -116,18 +116,15 @@ function renderCurrentGeneration() {
       const cell = document.createElement('td');
       cell.setAttribute('data-row', i);
       cell.setAttribute('data-column', j);
-      if (currentGeneration[i][j]) {
-        cell.className = 'alive';
-      }
+      if (currentGeneration[i][j]) cell.className = 'alive';
       currentRow.appendChild(cell);
     }
 
-    gameBoard.appendChild(currentRow);
+    newGameGrid.appendChild(currentRow);
   }
 
-  const gameDisplay = document.querySelector('#game-display');
-  gameDisplay.innerHTML = '';
-  gameDisplay.appendChild(gameBoard);
+  const oldGameGrid = document.querySelector('#game-grid');
+  oldGameGrid.replaceWith(newGameGrid);
 }
 
 // This section contains functions related to the next generation of cells.
