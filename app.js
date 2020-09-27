@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 
 // General game
 
@@ -20,35 +20,7 @@ function resetGame() {
 
 // Updates the page to display the next generation
 function renderGame() {
-  const currentGeneration = getCurrentGeneration();
-  const gridSize = getGridSize();
-  const rows = gridSize;
-  const columns = gridSize;
-  const gameCells = document.createElement('table');
-  gameCells.id = 'game-board';
-  gameCells.addEventListener('click', handleCellClick);
-
-  for (let i = 0; i < rows; i++) {
-    const currentRow = document.createElement('tr');
-    for (let j = 0; j < columns; j++) {
-      const cell = document.createElement('td')
-      cell.setAttribute("data-row", i);
-      cell.setAttribute("data-column", j);
-      if (currentGeneration[i][j]) {
-        cell.className = 'alive';
-      } else {
-        cell.className = 'dead';
-      }
-      currentRow.appendChild(cell);
-    }
-
-    gameCells.appendChild(currentRow);
-  }
-
-  const gameDisplay = document.querySelector('#game-display');
-  gameDisplay.innerHTML = '';
-  gameDisplay.appendChild(gameCells);
-
+  renderCurrentGeneration();
   renderGenerationCount();
   renderLiveCellCount();
 }
@@ -92,6 +64,37 @@ function resizeCurrentGeneration(size) {
   setCurrentGeneration(currentGenerationResized);
 }
 
+function renderCurrentGeneration() {
+  const currentGeneration = getCurrentGeneration();
+  const gridSize = getGridSize();
+  const rows = gridSize;
+  const columns = gridSize;
+  const gameCells = document.createElement('table');
+  gameCells.id = 'game-board';
+  gameCells.addEventListener('click', handleCellClick);
+
+  for (let i = 0; i < rows; i++) {
+    const currentRow = document.createElement('tr');
+    for (let j = 0; j < columns; j++) {
+      const cell = document.createElement('td');
+      cell.setAttribute('data-row', i);
+      cell.setAttribute('data-column', j);
+      if (currentGeneration[i][j]) {
+        cell.className = 'alive';
+      } else {
+        cell.className = 'dead';
+      }
+      currentRow.appendChild(cell);
+    }
+
+    gameCells.appendChild(currentRow);
+  }
+
+  const gameDisplay = document.querySelector('#game-display');
+  gameDisplay.innerHTML = '';
+  gameDisplay.appendChild(gameCells);
+}
+
 // Next generation
 
 // Returns an array containing the next generation of cells
@@ -99,9 +102,9 @@ function getNextGeneration() {
   const currentGeneration = getCurrentGeneration();
   const gridSize = getGridSize();
   let nextGeneration = [];
-  
+
   for (let i = 0; i < gridSize; i++) {
-    nextGeneration[i] = []; 
+    nextGeneration[i] = [];
     for (let j = 0; j < gridSize; j++) {
       const isAlive = isAliveNextGeneration(currentGeneration, i, j);
       nextGeneration[i][j] = isAlive;
@@ -125,9 +128,9 @@ function isAliveNextGeneration(currentGeneration, cellRow, cellColumn) {
   let isAlive = currentGeneration[cellRow][cellColumn];
 
   if (isAlive && liveNeighbors !== 2 && liveNeighbors !== 3) {
-      isAlive = 0;
+    isAlive = 0;
   } else if (liveNeighbors === 3) {
-      isAlive = 1;
+    isAlive = 1;
   }
 
   return isAlive;
@@ -200,7 +203,7 @@ function tick() {
   const nextGeneration = getNextGeneration();
   setCurrentGeneration(nextGeneration);
   incrementGenerationCount();
-  
+
   const liveCells = countLiveCells(nextGeneration);
   setLiveCellCount(liveCells);
 
@@ -208,7 +211,7 @@ function tick() {
     const stopButton = document.querySelector('#stop');
     stopButton.click();
   }
-  
+
   renderGame();
 }
 
@@ -239,30 +242,30 @@ function handlePatternSelection(event) {
 
 function getPattern(patternName) {
   let pattern = getEmptyGeneration();
-  
+
   switch (patternName) {
-    case "glider":
+    case 'glider':
       pattern = getGliderPattern();
       break;
-    case "small-exploder":
+    case 'small-exploder':
       pattern = getSmallExploderPattern();
       break;
-    case "exploder":
+    case 'exploder':
       pattern = getExploderPattern();
       break;
-    case "ten-cell-row":
+    case 'ten-cell-row':
       pattern = getTenCellRowPattern();
       break;
-    case "lightweight-spaceship":
+    case 'lightweight-spaceship':
       pattern = getLightweightSpaceshipPattern();
       break;
-    case "block":
+    case 'block':
       pattern = getBlockPattern();
       break;
-    case "tub":
+    case 'tub':
       pattern = getTubPattern();
       break;
-    case "boat":
+    case 'boat':
       pattern = getBoatPattern();
       break;
     default:
@@ -345,15 +348,15 @@ function getTenCellRowPattern(startingRow = 9, startingColumn = 5) {
 
 function getLightweightSpaceshipPattern(startingRow = 8, startingColumn = 8) {
   const lightweightSpaceshipPattern = getEmptyGeneration();
-  lightweightSpaceshipPattern[startingRow][startingColumn + 1] = 1
-  lightweightSpaceshipPattern[startingRow][startingColumn + 2] = 1
-  lightweightSpaceshipPattern[startingRow][startingColumn + 3] = 1
-  lightweightSpaceshipPattern[startingRow][startingColumn + 4] = 1
-  lightweightSpaceshipPattern[startingRow + 1][startingColumn] = 1
-  lightweightSpaceshipPattern[startingRow + 1][startingColumn + 4] = 1
-  lightweightSpaceshipPattern[startingRow + 2][startingColumn + 4] = 1
-  lightweightSpaceshipPattern[startingRow + 3][startingColumn] = 1
-  lightweightSpaceshipPattern[startingRow + 3][startingColumn + 3] = 1
+  lightweightSpaceshipPattern[startingRow][startingColumn + 1] = 1;
+  lightweightSpaceshipPattern[startingRow][startingColumn + 2] = 1;
+  lightweightSpaceshipPattern[startingRow][startingColumn + 3] = 1;
+  lightweightSpaceshipPattern[startingRow][startingColumn + 4] = 1;
+  lightweightSpaceshipPattern[startingRow + 1][startingColumn] = 1;
+  lightweightSpaceshipPattern[startingRow + 1][startingColumn + 4] = 1;
+  lightweightSpaceshipPattern[startingRow + 2][startingColumn + 4] = 1;
+  lightweightSpaceshipPattern[startingRow + 3][startingColumn] = 1;
+  lightweightSpaceshipPattern[startingRow + 3][startingColumn + 3] = 1;
   return lightweightSpaceshipPattern;
 }
 
@@ -390,7 +393,7 @@ function handleCellClick(event) {
   const cellColumn = event.target.dataset.column;
   const currentGeneration = getCurrentGeneration();
   let currentValue = currentGeneration[cellRow][cellColumn];
-  
+
   if (currentValue === 1) {
     currentGeneration[cellRow][cellColumn] = 0;
   } else {
@@ -488,7 +491,7 @@ function countLiveCells(generation) {
   const rows = generation.length;
   const columns = generation[0].length;
   let liveCells = 0;
-  
+
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < columns; j++) {
       liveCells += generation[i][j];
@@ -575,4 +578,3 @@ gridSize.addEventListener('change', handleGridSizeSelection);
 
 const randomLife = document.querySelector('#random-life');
 randomLife.addEventListener('click', handleRandomLifeSelection);
-
