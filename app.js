@@ -520,7 +520,7 @@ function getBoatPattern(startingRow = 8, startingColumn = 8) {
  */
 function handleGridSizeSelection() {
   updateGridSize();
-  const gridSize = getCurrentGridSize();
+  const gridSize = getGridSize();
   resizeCurrentGeneration(gridSize);
   renderGame();
 }
