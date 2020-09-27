@@ -108,7 +108,7 @@ function renderCurrentGeneration() {
   const columns = gridSize;
   const newGameGrid = document.createElement('table');
   newGameGrid.id = 'game-grid';
-  newGameGrid.addEventListener('click', handleCellClick);
+  newGameGrid.addEventListener('mousedown', handleCellClick);
 
   for (let i = 0; i < rows; i++) {
     const currentRow = document.createElement('tr');
