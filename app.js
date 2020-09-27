@@ -216,20 +216,6 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
 // This section contains functions related to ticking.
 
 /**
- * Updates the tick interval based on the tick speed selected by the user.
- */
-function updateTickInterval() {
-  const tickSpeed = document.querySelector('#tick-speed');
-  const rangeMax = tickSpeed.getAttribute('max');
-  const rangeValue = tickSpeed.value;
-  const newTickInterval = rangeMax - rangeValue;
-  setTickInterval(newTickInterval);
-
-  const activityStatus = getActivityStatus();
-  if (activityStatus === 'active') startTicking();
-}
-
-/**
  * Retrieves the current tick interval from local storage.
  * @return {number} - The current tick interval.
  */
@@ -246,6 +232,20 @@ function getTickInterval() {
 function setTickInterval(newTickInterval) {
   const localStorage = window.localStorage;
   localStorage.setItem('tickInterval', newTickInterval);
+}
+
+/**
+ * Updates the tick interval based on the tick speed selected by the user.
+ */
+function updateTickInterval() {
+  const tickSpeed = document.querySelector('#tick-speed');
+  const rangeMax = tickSpeed.getAttribute('max');
+  const rangeValue = tickSpeed.value;
+  const newTickInterval = rangeMax - rangeValue;
+  setTickInterval(newTickInterval);
+
+  const activityStatus = getActivityStatus();
+  if (activityStatus === 'active') startTicking();
 }
 
 /**
@@ -292,27 +292,6 @@ function stopTicking() {
 // This section contains functions related to the grid size.
 
 /**
- * Updates the grid size to the size selected by the user,
- * resizes the current generation to the selected size,
- * renders the game using the new grid.
- */
-function handleGridSizeSelection() {
-  updateGridSize();
-  const gridSize = getGridSize();
-  resizeCurrentGeneration(gridSize);
-  renderGame();
-}
-
-/**
- * Updates the grid size to the size selected by the user.
- */
-function updateGridSize() {
-  let gridSize = document.querySelector('#grid-size').value;
-  gridSize = parseInt(gridSize);
-  setGridSize(gridSize);
-}
-
-/**
  * Retrieves the current grid size from local storage.
  * @return {number} - The current grid size.
  */
@@ -332,15 +311,28 @@ function setGridSize(size) {
   localStorage.setItem('gridSize', size);
 }
 
-// This section contains functions related to the generation count.
+/**
+ * Updates the grid size to the size selected by the user.
+ */
+function updateGridSize() {
+  let gridSize = document.querySelector('#grid-size').value;
+  gridSize = parseInt(gridSize);
+  setGridSize(gridSize);
+}
 
 /**
- * Increments the current generation count.
+ * Updates the grid size to the size selected by the user,
+ * resizes the current generation to the selected size,
+ * renders the game using the new grid.
  */
-function incrementGenerationCount() {
-  const currentGenerationCount = getCurrentGenerationCount();
-  setCurrentGenerationCount(currentGenerationCount + 1);
+function handleGridSizeSelection() {
+  updateGridSize();
+  const gridSize = getGridSize();
+  resizeCurrentGeneration(gridSize);
+  renderGame();
 }
+
+// This section contains functions related to the generation count.
 
 /**
  * Retrieves the current generation count from local storage.
@@ -367,6 +359,14 @@ function setCurrentGenerationCount(newCount) {
  */
 function resetGenerationCount() {
   setCurrentGenerationCount(0);
+}
+
+/**
+ * Increments the current generation count.
+ */
+function incrementGenerationCount() {
+  const currentGenerationCount = getCurrentGenerationCount();
+  setCurrentGenerationCount(currentGenerationCount + 1);
 }
 
 /**
@@ -488,19 +488,6 @@ function setRandomLifeStatus(status) {
 }
 
 /**
- * Sets the random life status based on user selection.
- * @param {Event} event - Click event when user toggles random life.
- */
-function handleRandomLifeSelection(event) {
-  const randomLifeActive = event.target.checked;
-  if (randomLifeActive) {
-    setRandomLifeStatus('active');
-  } else {
-    setRandomLifeStatus('inactive');
-  }
-}
-
-/**
  * Randomly adds a live cell to the specified generation.
  * @param {Array} generation - The generation to add a random live cell to.
  * @return {Array} - The modified generation containing a new live cell.
@@ -518,6 +505,19 @@ function addRandomLife(generation) {
   }
 }
 
+/**
+ * Sets the random life status based on user selection.
+ * @param {Event} event - Click event when user toggles random life.
+ */
+function handleRandomLifeSelection(event) {
+  const randomLifeActive = event.target.checked;
+  if (randomLifeActive) {
+    setRandomLifeStatus('active');
+  } else {
+    setRandomLifeStatus('inactive');
+  }
+}
+
 // This section contains functions related to the predefined patterns.
 
 /**
@@ -526,7 +526,6 @@ function addRandomLife(generation) {
  * @param {Event} event - Selection of pattern.
  */
 function handlePatternSelection(event) {
-  console.log(event);
   const patternName = event.target.value;
   const pattern = getPattern(patternName);
   setCurrentGeneration(pattern);
