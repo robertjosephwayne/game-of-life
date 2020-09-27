@@ -118,8 +118,6 @@ function renderCurrentGeneration() {
       cell.setAttribute('data-column', j);
       if (currentGeneration[i][j]) {
         cell.className = 'alive';
-      } else {
-        cell.className = 'dead';
       }
       currentRow.appendChild(cell);
     }
