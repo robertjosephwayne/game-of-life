@@ -1,11 +1,39 @@
 "use strict"
 
+// Current generation
+
 // Retrieve and return an array containing the current generation of cells
 function getCurrentGeneration() {
   const localStorage = window.localStorage;
   const currentGenerationJSON = localStorage.getItem('currentGeneration');
   return JSON.parse(currentGenerationJSON);
 }
+
+function resizeCurrentGeneration(size) {
+  const currentGeneration = getCurrentGeneration();
+  const currentGenerationSize = currentGeneration.length;
+  const currentGenerationResized = [];
+  for (let i = 0; i < size; i++) {
+    currentGenerationResized[i] = [];
+    for (let j = 0; j < size; j++) {
+      if (i >= currentGenerationSize || j >= currentGenerationSize) {
+        currentGenerationResized[i][j] = 0;
+      } else {
+        currentGenerationResized[i][j] = currentGeneration[i][j];
+      }
+    }
+  }
+  setCurrentGeneration(currentGenerationResized);
+}
+
+// Updates the variable containing the current generation of cells to the next generation
+function setCurrentGeneration(nextGeneration) {
+  const localStorage = window.localStorage;
+  const nextGenerationJSON = JSON.stringify(nextGeneration);
+  localStorage.setItem('currentGeneration', nextGenerationJSON);
+}
+
+// Next generation
 
 // Returns an array containing the next generation of cells
 function getNextGeneration() {
@@ -27,13 +55,6 @@ function getNextGeneration() {
   }
 
   return nextGeneration;
-}
-
-// Updates the variable containing the current generation of cells to the next generation
-function setCurrentGeneration(nextGeneration) {
-  const localStorage = window.localStorage;
-  const nextGenerationJSON = JSON.stringify(nextGeneration);
-  localStorage.setItem('currentGeneration', nextGenerationJSON);
 }
 
 // Takes an array containing the current generation as an argument
@@ -88,7 +109,7 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
 }
 
 // Updates the page to display the next generation
-function render() {
+function renderGame() {
   const currentGeneration = getCurrentGeneration();
   const gridSize = getGridSize();
   const rows = gridSize;
@@ -139,7 +160,7 @@ function tick() {
     stopButton.click();
   }
   
-  render();
+  renderGame();
 }
 
 function initializeGame() {
@@ -151,7 +172,7 @@ function initializeGame() {
   initializeRandomLife();
   handleTickSpeedSelection();
   resetGenerationCount();
-  render();
+  renderGame();
 }
 
 function getPattern(patternName) {
@@ -326,7 +347,7 @@ function handleCellClick(event) {
 
   const liveCells = countLiveCells(currentGeneration);
   setLiveCellCount(liveCells);
-  render();
+  renderGame();
 }
 
 function handleReset() {
@@ -335,14 +356,14 @@ function handleReset() {
   const initialGeneration = getPattern(activePattern);
   setCurrentGeneration(initialGeneration);
   resetGenerationCount();
-  render();
+  renderGame();
 }
 
 function handlePatternSelection(event) {
   const patternName = event.target.value;
   const pattern = getPattern(patternName);
   setCurrentGeneration(pattern);
-  render();
+  renderGame();
 }
 
 function handleTickSpeedSelection() {
@@ -362,8 +383,10 @@ function handleGridSizeSelection() {
   gridSize = parseInt(gridSize);
   setGridSize(gridSize);
   resizeCurrentGeneration(gridSize);
-  render();
+  renderGame();
 }
+
+// Grid size
 
 function initializeGridSize() {
   let gridSize = document.querySelector('#grid-size').value;
@@ -381,6 +404,8 @@ function setGridSize(size) {
   const localStorage = window.localStorage;
   localStorage.setItem('gridSize', size);
 }
+
+// Generation count
 
 function incrementGenerationCount() {
   const currentGenerationCount = getCurrentGenerationCount();
@@ -404,6 +429,13 @@ function renderGenerationCount() {
   generationCountContainer.innerText = currentGenerationCount;
 }
 
+// Live cell count
+
+function initializeLiveCellCount() {
+  const localStorage = window.localStorage;
+  localStorage.setItem('liveCellCount', 0);
+}
+
 function renderLiveCellCount() {
   const liveCellCount = getLiveCellCount();
   const liveCellCountContainer = document.querySelector('#live-cell-count');
@@ -425,6 +457,8 @@ function resetGenerationCount() {
   setCurrentGenerationCount(0);
 }
 
+// Tick interval
+
 function getTickInterval() {
   const localStorage = window.localStorage;
   const tickInterval = localStorage.getItem('tickInterval');
@@ -436,6 +470,8 @@ function setTickInterval(newTickInterval) {
   localStorage.setItem('tickInterval', newTickInterval);
 }
 
+// Activity status
+
 function getActivityStatus() {
   const localStorage = window.localStorage;
   return localStorage.getItem('activityStatus');
@@ -446,14 +482,11 @@ function setActivityStatus(status) {
   localStorage.setItem('activityStatus', status);
 }
 
+// Random life
+
 function initializeRandomLife() {
   const localStorage = window.localStorage;
   localStorage.setItem('randomLifeStatus', 'inactive');
-}
-
-function initializeLiveCellCount() {
-  const localStorage = window.localStorage;
-  localStorage.setItem('liveCellCount', 0);
 }
 
 function handleRandomLifeSelection(event) {
@@ -487,23 +520,6 @@ function addRandomLife(generation) {
     generation[randomRow][randomColumn] = 1;
     return generation;
   }
-}
-
-function resizeCurrentGeneration(size) {
-  const currentGeneration = getCurrentGeneration();
-  const currentGenerationSize = currentGeneration.length;
-  const currentGenerationResized = [];
-  for (let i = 0; i < size; i++) {
-    currentGenerationResized[i] = [];
-    for (let j = 0; j < size; j++) {
-      if (i >= currentGenerationSize || j >= currentGenerationSize) {
-        currentGenerationResized[i][j] = 0;
-      } else {
-        currentGenerationResized[i][j] = currentGeneration[i][j];
-      }
-    }
-  }
-  setCurrentGeneration(currentGenerationResized);
 }
 
 function countLiveCells(generation) {
