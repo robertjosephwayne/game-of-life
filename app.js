@@ -770,5 +770,5 @@ gridSize.addEventListener('change', handleGridSizeSelection);
 const randomLife = document.querySelector('#random-life');
 randomLife.addEventListener('click', handleRandomLifeSelection);
 
-// Initialize the game.
+// Initializes the game.
 initializeGame();
