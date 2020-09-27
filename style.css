@@ -39,8 +39,16 @@ td {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+td:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 .alive {
   background-color: green;
+}
+
+.alive:hover {
+  background-color: rgba(0, 128, 0, 0.6);
 }
 
 #game-board {
