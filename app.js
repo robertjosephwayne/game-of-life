@@ -297,8 +297,7 @@ function stopTicking() {
  */
 function getGridSize() {
   const localStorage = window.localStorage;
-  let gridSize = localStorage.getItem('gridSize');
-  gridSize = parseInt(gridSize);
+  const gridSize = +localStorage.getItem('gridSize');
   return gridSize;
 }
 
@@ -315,8 +314,7 @@ function setGridSize(size) {
  * Updates the grid size to the size selected by the user.
  */
 function updateGridSize() {
-  let gridSize = document.querySelector('#grid-size').value;
-  gridSize = parseInt(gridSize);
+  const gridSize = +document.querySelector('#grid-size').value;
   setGridSize(gridSize);
 }
 
@@ -340,8 +338,7 @@ function handleGridSizeSelection() {
  */
 function getCurrentGenerationCount() {
   const localStorage = window.localStorage;
-  let currentGenerationCount = localStorage.getItem('currentGenerationCount');
-  currentGenerationCount = parseInt(currentGenerationCount);
+  const currentGenerationCount = +localStorage.getItem('currentGenerationCount');
   return currentGenerationCount;
 }
 
@@ -386,8 +383,7 @@ function renderGenerationCount() {
  */
 function getLiveCellCount() {
   const localStorage = window.localStorage;
-  let liveCellCount = localStorage.getItem('liveCellCount');
-  liveCellCount = parseInt(liveCellCount);
+  const liveCellCount = +localStorage.getItem('liveCellCount');
   return liveCellCount;
 }
 
