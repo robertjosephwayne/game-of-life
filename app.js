@@ -1,6 +1,6 @@
 'use strict';
 
-// This section contains general functions for the game.
+//1. This section contains general functions for the game.
 
 /** Initializes the game. */
 function initializeGame() {
@@ -50,7 +50,7 @@ function handleCellClick(event) {
   renderGame();
 }
 
-// This section contains functions related to the current generation of cells.
+//2. This section contains functions related to the current generation of cells.
 
 /**
  * Retrieves the current generation from local storage.
@@ -126,7 +126,7 @@ function renderCurrentGeneration() {
   oldGameGrid.replaceWith(newGameGrid);
 }
 
-// This section contains functions related to the next generation of cells.
+//3. This section contains functions related to the next generation of cells.
 
 /**
  * Determines which cells will be alive in the next generation
@@ -213,7 +213,7 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
   return liveNeighbors;
 }
 
-// This section contains functions related to ticking.
+//4. This section contains functions related to ticking.
 
 /**
  * Retrieves the current tick interval from local storage.
@@ -289,7 +289,7 @@ function stopTicking() {
   setActivityStatus('inactive');
 }
 
-// This section contains functions related to the grid size.
+//5. This section contains functions related to the grid size.
 
 /**
  * Retrieves the current grid size from local storage.
@@ -315,6 +315,7 @@ function setGridSize(size) {
  */
 function updateGridSize() {
   const gridSize = +document.querySelector('#grid-size').value;
+  console.log(gridSize);
   setGridSize(gridSize);
 }
 
@@ -330,7 +331,7 @@ function handleGridSizeSelection() {
   renderGame();
 }
 
-// This section contains functions related to the generation count.
+//6. This section contains functions related to the generation count.
 
 /**
  * Retrieves the current generation count from local storage.
@@ -375,7 +376,7 @@ function renderGenerationCount() {
   generationCountContainer.innerText = currentGenerationCount;
 }
 
-// This section contains functions related to the live cell count.
+//7. This section contains functions related to the live cell count.
 
 /**
  * Retrieves the current live cell count from local storage.
@@ -434,7 +435,7 @@ function countLiveCells(generation) {
   return liveCells;
 }
 
-// This section contains functions related to the game's activity status.
+//8. This section contains functions related to the game's activity status.
 
 /**
  * Retrieves the current activity status from local storage.
@@ -454,7 +455,7 @@ function setActivityStatus(status) {
   localStorage.setItem('activityStatus', status);
 }
 
-// This section contains functions related to random generation of live cells.
+//9. This section contains functions related to random generation of live cells.
 
 /**
  * Sets the random life status in local storage to 'inactive'.
@@ -514,7 +515,7 @@ function handleRandomLifeSelection(event) {
   }
 }
 
-// This section contains functions related to the predefined patterns.
+//10. This section contains functions related to the predefined patterns.
 
 /**
  * Sets the current generation to the selected pattern
