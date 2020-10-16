@@ -1,6 +1,6 @@
 'use strict';
 
-// This section contains general functions for the game.
+//1. This section contains general functions for the game.
 
 /** Initializes the game. */
 function initializeGame() {
@@ -50,7 +50,7 @@ function handleCellClick(event) {
   renderGame();
 }
 
-// This section contains functions related to the current generation of cells.
+//2. This section contains functions related to the current generation of cells.
 
 /**
  * Retrieves the current generation from local storage.
@@ -110,6 +110,7 @@ function renderCurrentGeneration() {
   newGameGrid.id = 'game-grid';
   newGameGrid.addEventListener('mousedown', handleCellClick);
 
+  //possibly a good place for more funciton-interior comments
   for (let i = 0; i < rows; i++) {
     const currentRow = document.createElement('tr');
     for (let j = 0; j < columns; j++) {
@@ -126,7 +127,7 @@ function renderCurrentGeneration() {
   oldGameGrid.replaceWith(newGameGrid);
 }
 
-// This section contains functions related to the next generation of cells.
+//3. This section contains functions related to the next generation of cells.
 
 /**
  * Determines which cells will be alive in the next generation
@@ -207,13 +208,14 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
 
       if (i === cellRow && j === cellColumn) continue;
       liveNeighbors += currentGeneration[neighborRow][neighborColumn];
+      // ^ the payoff to use 0/1 instead of true false
     }
   }
 
   return liveNeighbors;
 }
 
-// This section contains functions related to ticking.
+//4. This section contains functions related to ticking.
 
 /**
  * Retrieves the current tick interval from local storage.
@@ -232,6 +234,8 @@ function getTickInterval() {
 function setTickInterval(newTickInterval) {
   const localStorage = window.localStorage;
   localStorage.setItem('tickInterval', newTickInterval);
+  // ^ this obv works (may not in weird Private Browsing Modes), but you could also add global variables instead
+  // then close off the namespace a bit ...
 }
 
 /**
@@ -262,6 +266,12 @@ function tick() {
   if (liveCells === 0) {
     const stopButton = document.querySelector('#stop');
     stopButton.click();
+
+    //this doesn't work but lines 284 seem out of place. 
+    //You're adding eventListeners at the vry bottom and in startTicking()
+    //Hard to spot. 
+    //stopTicking();  
+    //clearInterval(ticker);
   }
 
   renderGame();
@@ -276,6 +286,7 @@ function startTicking() {
   const startButton = document.querySelector('#start');
   const stopButton = document.querySelector('#stop');
   const tickSpeed = document.querySelector('#tick-speed');
+  //SEE LINE ~266 ... ticker problem
   startButton.addEventListener('click', () => clearInterval(ticker));
   stopButton.addEventListener('click', () => clearInterval(ticker));
   tickSpeed.addEventListener('change', () => clearInterval(ticker));
@@ -289,7 +300,7 @@ function stopTicking() {
   setActivityStatus('inactive');
 }
 
-// This section contains functions related to the grid size.
+//5. This section contains functions related to the grid size.
 
 /**
  * Retrieves the current grid size from local storage.
@@ -305,6 +316,7 @@ function getGridSize() {
  * Sets the grid size value in local storage to a new size.
  * @param {number} size - The new grid size.
 */
+// This could be part of updateGridSize imo
 function setGridSize(size) {
   const localStorage = window.localStorage;
   localStorage.setItem('gridSize', size);
@@ -330,7 +342,7 @@ function handleGridSizeSelection() {
   renderGame();
 }
 
-// This section contains functions related to the generation count.
+//6. This section contains functions related to the generation count.
 
 /**
  * Retrieves the current generation count from local storage.
@@ -375,7 +387,7 @@ function renderGenerationCount() {
   generationCountContainer.innerText = currentGenerationCount;
 }
 
-// This section contains functions related to the live cell count.
+//7. This section contains functions related to the live cell count.
 
 /**
  * Retrieves the current live cell count from local storage.
@@ -413,6 +425,7 @@ function renderLiveCellCount() {
   const liveCellCount = getLiveCellCount();
   const liveCellCountContainer = document.querySelector('#live-cell-count');
   liveCellCountContainer.innerText = liveCellCount;
+  //good/necessary use of DOM and good function separation here 
 }
 
 /**
@@ -434,7 +447,7 @@ function countLiveCells(generation) {
   return liveCells;
 }
 
-// This section contains functions related to the game's activity status.
+//8. This section contains functions related to the game's activity status.
 
 /**
  * Retrieves the current activity status from local storage.
@@ -454,7 +467,7 @@ function setActivityStatus(status) {
   localStorage.setItem('activityStatus', status);
 }
 
-// This section contains functions related to random generation of live cells.
+//9. This section contains functions related to random generation of live cells.
 
 /**
  * Sets the random life status in local storage to 'inactive'.
@@ -489,6 +502,7 @@ function setRandomLifeStatus(status) {
  * @return {Array} - The modified generation containing a new live cell.
 */
 function addRandomLife(generation) {
+  
   const gridSize = getGridSize();
   const randomRow = Math.floor(Math.random() * gridSize);
   const randomColumn = Math.floor(Math.random() * gridSize);
@@ -514,7 +528,7 @@ function handleRandomLifeSelection(event) {
   }
 }
 
-// This section contains functions related to the predefined patterns.
+//10. This section contains functions related to the predefined patterns.
 
 /**
  * Sets the current generation to the selected pattern
@@ -735,7 +749,7 @@ function getBoatPattern(startingRow = 8, startingColumn = 8) {
 }
 
 // The user can click this button to manually trigger a tick.
-const tickButton = document.querySelector('#tick');
+const tickButton = document.getElementById('tick');
 tickButton.addEventListener('click', tick);
 
 // The start button initiates automatic ticking at the specified interval.
