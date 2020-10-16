@@ -110,6 +110,7 @@ function renderCurrentGeneration() {
   newGameGrid.id = 'game-grid';
   newGameGrid.addEventListener('mousedown', handleCellClick);
 
+  //possibly a good place for more funciton-interior comments
   for (let i = 0; i < rows; i++) {
     const currentRow = document.createElement('tr');
     for (let j = 0; j < columns; j++) {
@@ -207,6 +208,7 @@ function countLiveNeighbors(currentGeneration, cellRow, cellColumn) {
 
       if (i === cellRow && j === cellColumn) continue;
       liveNeighbors += currentGeneration[neighborRow][neighborColumn];
+      // ^ the payoff to use 0/1 instead of true false
     }
   }
 
@@ -232,6 +234,8 @@ function getTickInterval() {
 function setTickInterval(newTickInterval) {
   const localStorage = window.localStorage;
   localStorage.setItem('tickInterval', newTickInterval);
+  // ^ this obv works (may not in weird Private Browsing Modes), but you could also add global variables instead
+  // then close off the namespace a bit ...
 }
 
 /**
@@ -262,6 +266,12 @@ function tick() {
   if (liveCells === 0) {
     const stopButton = document.querySelector('#stop');
     stopButton.click();
+
+    //this doesn't work but lines 284 seem out of place. 
+    //You're adding eventListeners at the vry bottom and in startTicking()
+    //Hard to spot. 
+    //stopTicking();  
+    //clearInterval(ticker);
   }
 
   renderGame();
@@ -276,6 +286,7 @@ function startTicking() {
   const startButton = document.querySelector('#start');
   const stopButton = document.querySelector('#stop');
   const tickSpeed = document.querySelector('#tick-speed');
+  //SEE LINE ~266 ... ticker problem
   startButton.addEventListener('click', () => clearInterval(ticker));
   stopButton.addEventListener('click', () => clearInterval(ticker));
   tickSpeed.addEventListener('change', () => clearInterval(ticker));
@@ -305,6 +316,7 @@ function getGridSize() {
  * Sets the grid size value in local storage to a new size.
  * @param {number} size - The new grid size.
 */
+// This could be part of updateGridSize imo
 function setGridSize(size) {
   const localStorage = window.localStorage;
   localStorage.setItem('gridSize', size);
@@ -315,7 +327,6 @@ function setGridSize(size) {
  */
 function updateGridSize() {
   const gridSize = +document.querySelector('#grid-size').value;
-  console.log(gridSize);
   setGridSize(gridSize);
 }
 
@@ -414,6 +425,7 @@ function renderLiveCellCount() {
   const liveCellCount = getLiveCellCount();
   const liveCellCountContainer = document.querySelector('#live-cell-count');
   liveCellCountContainer.innerText = liveCellCount;
+  //good/necessary use of DOM and good function separation here 
 }
 
 /**
@@ -490,6 +502,7 @@ function setRandomLifeStatus(status) {
  * @return {Array} - The modified generation containing a new live cell.
 */
 function addRandomLife(generation) {
+  
   const gridSize = getGridSize();
   const randomRow = Math.floor(Math.random() * gridSize);
   const randomColumn = Math.floor(Math.random() * gridSize);
@@ -736,7 +749,7 @@ function getBoatPattern(startingRow = 8, startingColumn = 8) {
 }
 
 // The user can click this button to manually trigger a tick.
-const tickButton = document.querySelector('#tick');
+const tickButton = document.getElementById('tick');
 tickButton.addEventListener('click', tick);
 
 // The start button initiates automatic ticking at the specified interval.
